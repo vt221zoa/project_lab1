@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Користувачі
+model User {
+  /// Ідентифікатор користувача
+  id String @id @default(cuid())
+
+  /// Унікальна почта користувача
+  email    String @unique
+  /// Пароль користувача
+  password String
+  /// Ім'я користувача
+  name     String
+
+  /// Ззображення користувача
+  imageUrl  String?
+  /// Чи є адміном користувач?
+  isAdmin   Boolean  @default(false) // В подальшому розвитку сайту треба буде додати ролі для них
+  /// Коли створений користувач?
+  createdAt DateTime @default(now())
+}
+
+/// Аніме
+model Anime {
+  /// Ідентифікатор аніме
+  id String @id @default(cuid())
+
+  /// Назва аніме українською
+  titleUa String?
+  /// Назва аніме англійською
+  titleEn String
+  /// Назва аніме японською
+  titleJp String
+
+  /// Опис аніме
+  description String
+  /// Віковий рейтинг аніме
+  rating      Float
+  /// Тип аніме (TV-серіал, Фільм і тощо)
+  kind        String
+  /// Кількість випущених серій в епізоді
+  episodes    String
+  /// Статус аніме (онгоїнг, вийшло, ще випускається)
+  status      String
+  /// Коли створене аніме
+  dateRelease DateTime?
+
+  /// Зображення аніме в URL
+  imageUrl String //Затвердити чи буде в URL або файлом?
+  /// Студія яка виробляла це аніме
+  studioId String
+  studio   Studio              @relation(fields: [studioId], references: [id])
+  /// Жанри аніме
+  genres   AnimeGenreOnAnime[]
+}
+
+/// Манга
+model Manga {
+  /// Ідентифікатор манги
+  id String @id @default(cuid())
+
+  /// Назва манги українською
+  titleUa String
+  /// Назва манги англійскьою
+  titleEn String
+  /// Назва манги японською
+  titleJp String
+
+  /// Опис манги
+  description String
+  /// Тип манги (Манга, Манхва і тощо)
+  kind        String
+  /// Кількість розділів в творі
+  chapters    String
+  /// Кількість томів в творі
+  volumes     String
+  /// Дата релізу манги
+  dateRelease DateTime?
+  /// Статус манги (Видається, Видано і тощо)
+  status      String
+
+  /// Зображення манги
+  imageUrl    String
+  /// Видавництва які випускають мангу
+  publisherId String
+  publisher   Publisher           @relation(fields: [publisherId], references: [id])
+  /// Жанри
+  genres      MangaGenreOnManga[]
+}
+
+/// Жанри аніме
+model AnimeGenre {
+  id     String              @id @default(cuid())
+  /// Назва жанру
+  name   String              @unique
+  /// Зв'язок жанру і аніме
+  animes AnimeGenreOnAnime[]
+}
+
+/// Жанри манги
+model MangaGenre {
+  id     String              @id @default(cuid())
+  /// Назва жанру
+  name   String              @unique
+  /// Зв'язок жанру і манги
+  mangas MangaGenreOnManga[]
+}
+
+/// Зв'язки аніме та жанрів
+model AnimeGenreOnAnime {
+  animeId String
+  anime   Anime      @relation(fields: [animeId], references: [id])
+  genreId String
+  genre   AnimeGenre @relation(fields: [genreId], references: [id])
+
+  @@id([animeId, genreId])
+}
+
+/// Зв'язки манги та жанрів
+model MangaGenreOnManga {
+  mangaId String
+  manga   Manga      @relation(fields: [mangaId], references: [id])
+  genreId String
+  genre   MangaGenre @relation(fields: [genreId], references: [id])
+
+  @@id([mangaId, genreId])
+}
+
+/// Студія
+model Studio {
+  /// Ідентифікатор студії
+  id     String  @id @default(cuid())
+  /// Назва студії
+  name   String  @unique
+  /// Студії які виробляли аніме
+  animes Anime[]
+}
+
+/// Видавництва
+model Publisher {
+  /// Ідентифікатор видавництва
+  id     String  @id @default(cuid())
+  /// Назва видавництва
+  name   String  @unique
+  /// Видавництва які видають манги
+  mangas Manga[]
+}
