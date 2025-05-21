@@ -1,0 +1,120 @@
+'use client';
+
+import Image from 'next/image';
+import SectionInfo from '@/components/SectionInfo';
+import { AnimeFullType, MangaFullType } from '@/types/types';
+import Link from "next/link";
+
+const FALLBACK_IMAGE = '/static/not-found.png';
+
+type Props = {
+    type: 'anime' | 'manga';
+    data: AnimeFullType | MangaFullType;
+};
+
+export default function MediaDetails({ type, data }: Props) {
+    const isAnime = type === 'anime';
+
+    const imgSrc =
+        data.imageUrl && data.imageUrl.trim() !== ''
+            ? data.imageUrl.startsWith('http')
+                ? data.imageUrl
+                : `/image/${type}/${data.imageUrl}`
+            : FALLBACK_IMAGE;
+
+    const genres = data.genres?.map((g) =>
+        isAnime ? g.genre?.name : g.genre?.name
+    ).filter(Boolean).join(', ');
+
+    return (
+        <div>
+            <h1 className="font-bold my-[12px]">
+                {[data.titleUa, data.titleEn, data.titleJp]
+                    .filter(Boolean)
+                    .join(' / ')
+                }
+            </h1>
+
+            <div className="grid grid-cols-[270px_minmax(300px,1fr)_minmax(300px,1fr)] gap-[20px] mb-[7px] items-start">
+
+                {/* Зображення */}
+                <div>
+                    <Image
+                        src={imgSrc}
+                        alt={data.titleEn}
+                        width={270}
+                        height={390}
+                        className="rounded-md object-cover"
+                    />
+                </div>
+
+                {/* Інформація */}
+                <div>
+                    <SectionInfo text="Інформація" />
+                    <div className="mt-[2px] space-y-[8px]">
+                        <div><b>Тип:</b> {data.kind}</div>
+                        {isAnime && <div><b>Епізодів:</b> {data.episodes ?? '—'}</div>}
+                        {!isAnime && <>
+                            <div><b>Томів:</b> {data.volumes ?? '—'}</div>
+                            <div><b>Розділів:</b> {data.chapters ?? '—'}</div>
+                        </>}
+                        <div><b>Статус:</b> {data.status}</div>
+                        {data.dateRelease && (
+                            <div><b>Дата релізу:</b> {new Date(data.dateRelease).toLocaleDateString()}</div>
+                        )}
+                        <div><b>Жанри:</b> {genres || '—'}</div>
+                        {isAnime && <div><b>Віковий рейтинг:</b> {data.rating ?? '—'}</div>}
+                    </div>
+                </div>
+
+                {/* Студія або Видавництво */}
+                <div className='text-[20px] font-[600]'>
+                    <SectionInfo text={isAnime ? 'Студія' : 'Видавництво'} />
+                    {isAnime ? (
+                        data.studio?.name ? (
+                            <Link
+                                href={`/studio/${data.studio.id}`}
+                                className="block decoration-dashed text-[#1a1a1a]"
+                                title={data.studio.name}
+                            >
+                                {data.studio.logoURL ? (
+                                    <Image
+                                        src={'/image/studio/test.png'}
+                                        alt={data.studio.name}
+                                        width={400}
+                                        height={0}
+                                        className="w-full h-auto max-h-[100px] rounded object-contain"
+                                    />
+                                ) : (
+                                    <span className="w-full">{data.studio.name}</span>
+                                )}
+                            </Link>
+                        ) : (
+                            <span>Відсутня студія</span>
+                        )
+                    ) : (
+                        data.publisher?.id && data.publisher?.name ? (
+                            <Link
+                                href={`/publisher/${data.publisher.id}`}
+                                className="block w-full decoration-dashed text-[#1a1a1a]"
+                                title={data.publisher.name}
+                            >
+                                {data.publisher.name}
+                            </Link>
+                        ) : (
+                            <span>Відсутне видавництво</span>
+                        )
+                    )}
+                </div>
+
+                {/* Опис */}
+                {data.description && (
+                    <div className='col-start-2 col-span-3'>
+                        <SectionInfo text="Опис" />
+                        <p className="mt-1 text-gray-800 text-sm">{data.description}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import {SectionTitleProps} from '@/types/props';
-import Link from "next/link";
 
 const SectionTitle: React.FC<SectionTitleProps> = ({
                                                        text,
@@ -12,7 +11,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
         .padStart(2, '0')}`;
 
     return (
-        <Link href='/anime' className="w-full h-[40px] text-[18px] font-[600] rounded-[5px] flex items-center no-underline text-[#1a1a1a] px-4 relative my-[18px]"
+        <div className="w-full h-[40px] text-[18px] font-[600] rounded-[5px] flex items-center no-underline text-[#1a1a1a] px-4 relative "
              style={{ backgroundColor: bgColorWithOpacity }}>
               <span
                   className="absolute left-0 top-0 h-full w-[10px] rounded-[5px]"
@@ -25,7 +24,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
                 className="absolute inset-0 rounded-[5px]"
                 style={{ backgroundColor: bgColorWithOpacity }}
             />
-        </Link>
+        </div>
     );
 };
 

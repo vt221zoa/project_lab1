@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.scss";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "AniMan",
@@ -14,7 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <Header />
+        <div className='mx-[140px]'>
+            {children}
+        </div>
       </body>
     </html>
   );

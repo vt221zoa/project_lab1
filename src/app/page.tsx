@@ -19,9 +19,10 @@ export default function Home() {
   return (
       <main className="p-6">
           <SectionTitle text="Зараз на екранах"/>
-          <div className="content_block flex flex-wrap justify-center">
+          <div className="content_block flex flex-wrap justify-between">
           {animes.map((anime) => (
               <AnimeCardBlock
+                  id={anime.id}
                   key={anime.id}
                   titleUa={anime.titleUa}
                   titleEn={anime.titleEn}

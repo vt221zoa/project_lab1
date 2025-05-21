@@ -1,30 +1,32 @@
 // Виведення аніме повністю
 export type AnimeFullType = {
-    id: string;
+    id: number;
     titleUa?: string | null;
     titleEn: string;
     titleJp?: string;
     description?: string;
-    rating?: number;
+    rating?: string;
     kind: string;
-    episodes?: string;
+    episodes?: number;
     status: string;
     dateRelease?: string;
     imageUrl?: string;
     studio?: {
-        id: string;
-        name: string;
+        id: number;
+        logoURL?: string;
+        name?: string;
     };
     genres?: {
-        genre: {
+        genre?: {
             id: string;
-            name: string;
+            name?: string;
         };
     }[];
 }
 
 // Виведення аніме у головну сторінку та в каталогу
 export type AnimeCardType = {
+    id: number;
     titleUa?: string | null;
     titleEn: string;
     imageUrl?: string;
@@ -32,7 +34,7 @@ export type AnimeCardType = {
 }
 
 export type AnimeCardType2 = {
-    id: string;
+    id: number;
     titleUa?: string;
     titleEn: string;
     imageUrl: string;
@@ -43,24 +45,24 @@ export type AnimeCardType2 = {
 
 // Виведення манги повністю
 export type MangaFullType = {
-    id: string;
+    id: number;
     titleUa?: string;
     titleEn: string;
     titleJp?: string;
     description?: string;
     kind: string;
-    chapters?: string;
-    volumes?: string;
+    chapters?: number;
+    volumes?: number;
     dateRelease?: string;
     status: string;
     imageUrl?: string;
     publisher?: {
-        id: string;
+        id: number;
         name: string;
     };
     genres?: {
-        genre: {
-            id: string;
+        genre?: {
+            id: number;
             name: string;
         };
     }[];
@@ -68,7 +70,7 @@ export type MangaFullType = {
 
 // Виведення манги у головну сторінку та в каталогу
 export type MangaCardType = {
-    id: string;
+    id: number;
     titleUa: string;
     titleEn: string;
     imageUrl: string;
@@ -76,7 +78,7 @@ export type MangaCardType = {
 }
 
 export type UserHeaderType = {
-    id: string;
+    id: number;
     name: string;
     imageUrl?: string | null;
 }
