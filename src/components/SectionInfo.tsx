@@ -1,7 +1,7 @@
 import React from 'react';
 import {SectionTitleProps} from '@/types/props';
 
-const SectionTitle: React.FC<SectionTitleProps> = ({
+const SectionInfo: React.FC<SectionTitleProps> = ({
                                                        text,
                                                        color = '#07006C',
                                                        opacity = 0.12,
@@ -11,7 +11,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
         .padStart(2, '0')}`;
 
     return (
-        <div className="w-full h-[40px] text-[18px] font-[600] rounded-[5px] flex items-center no-underline text-[#1a1a1a] px-4 relative "
+        <div className="w-full h-[40px] text-[18px] font-[600] mb-[15px] rounded-[5px] flex items-center no-underline text-[#1a1a1a] relative my-[18px]"
              style={{ backgroundColor: bgColorWithOpacity }}>
               <span
                   className="absolute left-0 top-0 h-full w-[10px] rounded-[5px]"
@@ -28,4 +28,4 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
     );
 };
 
-export default SectionTitle;
+export default SectionInfo;

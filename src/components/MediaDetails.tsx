@@ -13,7 +13,8 @@ type Props = {
 };
 
 export default function MediaDetails({ type, data }: Props) {
-    const isAnime = type === 'anime';
+    const isAnime = (data: AnimeFullType | MangaFullType): data is AnimeFullType  => !(data as MangaFullType).chapters;
+
 
     const imgSrc =
         data.imageUrl && data.imageUrl.trim() !== ''
@@ -23,7 +24,7 @@ export default function MediaDetails({ type, data }: Props) {
             : FALLBACK_IMAGE;
 
     const genres = data.genres?.map((g) =>
-        isAnime ? g.genre?.name : g.genre?.name
+        isAnime(data) ? g.genre?.name : g.genre?.name
     ).filter(Boolean).join(', ');
 
     return (
@@ -51,10 +52,10 @@ export default function MediaDetails({ type, data }: Props) {
                 {/* Інформація */}
                 <div>
                     <SectionInfo text="Інформація" />
-                    <div className="mt-[2px] space-y-[8px]">
+                    <div className="space-y-[8px]">
                         <div><b>Тип:</b> {data.kind}</div>
-                        {isAnime && <div><b>Епізодів:</b> {data.episodes ?? '—'}</div>}
-                        {!isAnime && <>
+                        {isAnime(data) && <div><b>Епізодів:</b> {data.episodes ?? '—'}</div>}
+                        {!isAnime(data) && <>
                             <div><b>Томів:</b> {data.volumes ?? '—'}</div>
                             <div><b>Розділів:</b> {data.chapters ?? '—'}</div>
                         </>}
@@ -63,23 +64,23 @@ export default function MediaDetails({ type, data }: Props) {
                             <div><b>Дата релізу:</b> {new Date(data.dateRelease).toLocaleDateString()}</div>
                         )}
                         <div><b>Жанри:</b> {genres || '—'}</div>
-                        {isAnime && <div><b>Віковий рейтинг:</b> {data.rating ?? '—'}</div>}
+                        {isAnime(data) && <div><b>Віковий рейтинг:</b> {data.rating ?? '—'}</div>}
                     </div>
                 </div>
 
                 {/* Студія або Видавництво */}
                 <div className='text-[20px] font-[600]'>
-                    <SectionInfo text={isAnime ? 'Студія' : 'Видавництво'} />
-                    {isAnime ? (
+                    <SectionInfo text={isAnime(data) ? 'Студія' : 'Видавництво'} />
+                    {isAnime(data) ? (
                         data.studio?.name ? (
                             <Link
                                 href={`/studio/${data.studio.id}`}
                                 className="block decoration-dashed text-[#1a1a1a]"
                                 title={data.studio.name}
                             >
-                                {data.studio.logoURL ? (
+                                {data.studio?.logoUrl ? (
                                     <Image
-                                        src={'/image/studio/test.png'}
+                                        src={'/image/studio/' + data.studio?.logoUrl}
                                         alt={data.studio.name}
                                         width={400}
                                         height={0}
@@ -111,7 +112,7 @@ export default function MediaDetails({ type, data }: Props) {
                 {data.description && (
                     <div className='col-start-2 col-span-3'>
                         <SectionInfo text="Опис" />
-                        <p className="mt-1 text-gray-800 text-sm">{data.description}</p>
+                        <div className="text-gray-800">{data.description}</div>
                     </div>
                 )}
             </div>

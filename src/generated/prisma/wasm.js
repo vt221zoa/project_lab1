@@ -160,14 +160,10 @@ exports.Prisma.MangaScalarFieldEnum = {
   publisherId: 'publisherId'
 };
 
-exports.Prisma.AnimeGenreScalarFieldEnum = {
+exports.Prisma.GenreScalarFieldEnum = {
   id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.MangaGenreScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
+  name: 'name',
+  nameEn: 'nameEn'
 };
 
 exports.Prisma.AnimeGenreOnAnimeScalarFieldEnum = {
@@ -182,7 +178,8 @@ exports.Prisma.MangaGenreOnMangaScalarFieldEnum = {
 
 exports.Prisma.StudioScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  logoUrl: 'logoUrl'
 };
 
 exports.Prisma.PublisherScalarFieldEnum = {
@@ -210,8 +207,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Anime: 'Anime',
   Manga: 'Manga',
-  AnimeGenre: 'AnimeGenre',
-  MangaGenre: 'MangaGenre',
+  Genre: 'Genre',
   AnimeGenreOnAnime: 'AnimeGenreOnAnime',
   MangaGenreOnManga: 'MangaGenreOnManga',
   Studio: 'Studio',

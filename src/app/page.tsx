@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {AnimeCardBlock} from '@/components/AnimeCard';
 import SectionTitle from "@/components/SectionTitle";
 import { AnimeCardType2 } from '@/types/types';
+import {MediaCard} from "@/components/MediaCard";
 
 
 export default function Home() {
@@ -17,11 +17,12 @@ export default function Home() {
   }, []);
 
   return (
-      <main className="p-6">
+      <main>
           <SectionTitle text="Зараз на екранах"/>
           <div className="content_block flex flex-wrap justify-between">
           {animes.map((anime) => (
-              <AnimeCardBlock
+              <MediaCard
+                  type='anime'
                   id={anime.id}
                   key={anime.id}
                   titleUa={anime.titleUa}

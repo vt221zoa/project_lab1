@@ -5,14 +5,12 @@ export async function GET() {
     try {
         const ongoingAnime = await prisma.anime.findMany({
             where: { status: 'Вийшло' },
-            orderBy: { dateRelease: 'desc' },
-            take: 6,
             include: {
                 studio: true,
             },
         });
-
-        return NextResponse.json(ongoingAnime);
+        const shuffled = ongoingAnime.sort(() => Math.random() - 0.5).slice(0, 6);
+        return NextResponse.json(shuffled);
     } catch (error) {
         console.error('Помилка при отриманні аніме:', error);
         return NextResponse.json({ message: 'Щось пішло не так' }, { status: 500 });

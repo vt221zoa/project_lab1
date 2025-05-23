@@ -13,7 +13,7 @@ export type AnimeFullType = {
     imageUrl?: string;
     studio?: {
         id: number;
-        logoURL?: string;
+        logoUrl?: string;
         name?: string;
     };
     genres?: {
@@ -23,25 +23,6 @@ export type AnimeFullType = {
         };
     }[];
 }
-
-// Виведення аніме у головну сторінку та в каталогу
-export type AnimeCardType = {
-    id: number;
-    titleUa?: string | null;
-    titleEn: string;
-    imageUrl?: string;
-    studioName?: string;
-}
-
-export type AnimeCardType2 = {
-    id: number;
-    titleUa?: string;
-    titleEn: string;
-    imageUrl: string;
-    studio?: {
-        name?: string;
-    };
-};
 
 // Виведення манги повністю
 export type MangaFullType = {
@@ -58,6 +39,7 @@ export type MangaFullType = {
     imageUrl?: string;
     publisher?: {
         id: number;
+        logoUrl?: string;
         name: string;
     };
     genres?: {
@@ -68,15 +50,33 @@ export type MangaFullType = {
     }[];
 }
 
-// Виведення манги у головну сторінку та в каталогу
-export type MangaCardType = {
+// Виведення аніме частково
+export type AnimeCardType2 = {
     id: number;
-    titleUa: string;
+    titleUa?: string;
     titleEn: string;
+    kind: string;
+    dateRelease?: string;
     imageUrl: string;
-    publisherName: string;
+    studio?: {
+        name?: string;
+    };
+};
+
+// Виведення манги частково
+export type MangaCardType2 = {
+    id: number;
+    titleUa?: string;
+    titleEn: string;
+    kind: string;
+    dateRelease?: string;
+    imageUrl?: string;
+    publisher?: {
+        name?: string;
+    };
 }
 
+// Виведення профілю (ще не реалізовано)
 export type UserHeaderType = {
     id: number;
     name: string;

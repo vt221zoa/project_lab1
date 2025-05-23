@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className='mx-[140px]'>
+        <div className='mx-[115px] mt-[50px] px-[25px] pb-[20px] pt-[8px] bg-[#D9D9D9] shadow-block h-screen'>
             {children}
         </div>
       </body>
