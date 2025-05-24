@@ -1,29 +1,21 @@
 import React from 'react';
 import { MangaCardType2 } from '@/types/types';
 import { MediaCard } from '@/components/MediaCard';
+import { notFound } from "next/navigation";
 
-interface Props {
-    params: {
-        id: string;
-    };
-}
-
-export default async function Page({ params }: Props) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/publisher/${params.id}`, {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/publisher/${id}`, {
         cache: 'no-store',
     });
 
     if (!res.ok) {
-        return <div className="p-4 text-red-600">Помилка при завантаженні видавництва.</div>;
+        notFound();
     }
-
     const mangaList: MangaCardType2[] = await res.json();
+
     if (!mangaList[0]?.publisher) {
-        return (
-            <div className="text-2xl font-bold mb-4 text-red-600">
-                Видавництво не знайдено
-            </div>
-        );
+        notFound();
     }
 
     const publisherName = mangaList[0].publisher.name;

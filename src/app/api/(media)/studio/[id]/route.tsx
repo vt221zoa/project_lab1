@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { Params } from '@/types/interfaces'
 
-export async function GET(_: NextRequest, { params }: Params) {
+export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const studioId = Number(params.id);
+        const { id } = await params;
+        const studioId = Number(id);
 
         const animeList = await prisma.anime.findMany({
             where: {

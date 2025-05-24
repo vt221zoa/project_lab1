@@ -1,9 +1,9 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-import { Params } from '@/types/interfaces'
 
-export async function GET(request: Request, { params }: Params) {
-    const mangaId = Number(params.id);
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const mangaId = Number(id);
 
     const manga = await prisma.manga.findUnique({
         where: { id: mangaId },
@@ -48,8 +48,9 @@ export async function GET(request: Request, { params }: Params) {
     });
 }
 
-export async function DELETE(request: Request, { params }: Params) {
-    const mangaId = Number(params.id);
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const mangaId = Number(id);
 
     try {
         await prisma.mangaGenreOnManga.deleteMany({ where: { mangaId } });
@@ -62,8 +63,9 @@ export async function DELETE(request: Request, { params }: Params) {
     }
 }
 
-export async function PATCH(request: Request, { params }: Params) {
-    const mangaId = Number(params.id);
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const mangaId = Number(id);
     const body = await request.json();
     const { genreIds = [] } = body;
 
