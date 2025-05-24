@@ -59,6 +59,6 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: true, manga: mangaWithGenres });
     } catch (e) {
         console.error('Помилка створення:', e);
-        return NextResponse.json({ error: 'Не вдалося створити аніме' }, { status: 500 });
+        return NextResponse.json({ error: 'Не вдалося створити мангу' }, { status: 500 });
     }
 }
