@@ -3,18 +3,19 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
     try {
-        const allAnime = await prisma.anime.findMany({
-            include: {
-                studio: true,
+        const genres = await prisma.genre.findMany({
+            select: {
+                id: true,
+                name: true,
             },
             orderBy: {
-                id: 'asc',
+                name: 'asc',
             },
         });
 
-        return NextResponse.json(allAnime);
+        return NextResponse.json(genres);
     } catch (error) {
-        console.error('Помилка при отриманні всіх аніме:', error);
+        console.error('Помилка при отриманні жанрів:', error);
         return NextResponse.json({ message: 'Щось пішло не так' }, { status: 500 });
     }
 }
@@ -27,39 +28,39 @@ export async function POST(request: Request) {
         function toNullableString(value: string): string | null {
             return value.trim() === '' ? null : value;
         }
-        const anime = await prisma.anime.create({
+        const manga = await prisma.manga.create({
             data: {
                 titleUa: toNullableString(body.titleUa),
                 titleEn: body.titleEn,
                 titleJp: toNullableString(body.titleJp),
                 description: toNullableString(body.description),
                 kind: body.kind,
-                episodes: body.episodes || null,
+                chapters: body.chapters || null,
+                volumes: body.volumes || null,
                 status: body.status,
                 dateRelease: body.dateRelease ? new Date(body.dateRelease) : undefined,
                 imageUrl: toNullableString(body.imageUrl),
-                rating: toNullableString(body.rating),
-                studioId: body.studioId,
+                publisherId: body.publisherId,
             },
         });
 
         if (Array.isArray(genreIds) && genreIds.length > 0) {
-            await prisma.animeGenreOnAnime.createMany({
+            await prisma.mangaGenreOnManga.createMany({
                 data: genreIds.map((genreId: number) => ({
-                    animeId: anime.id,
+                    mangaId: manga.id,
                     genreId,
                 })),
             });
         }
 
-        const animeWithGenres = await prisma.anime.findUnique({
-            where: { id: anime.id },
+        const mangaWithGenres = await prisma.manga.findUnique({
+            where: { id: manga.id },
             include: {
                 genres: { include: { genre: true } },
             },
         });
 
-        return NextResponse.json({ success: true, anime: animeWithGenres });
+        return NextResponse.json({ success: true, manga: mangaWithGenres });
     } catch (e) {
         console.error('Помилка створення:', e);
         return NextResponse.json({ error: 'Не вдалося створити аніме' }, { status: 500 });

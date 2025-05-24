@@ -11,7 +11,7 @@ const SectionInfo: React.FC<SectionTitleProps> = ({
         .padStart(2, '0')}`;
 
     return (
-        <div className="w-full h-[40px] text-[18px] font-[600] mb-[15px] rounded-[5px] flex items-center no-underline text-[#1a1a1a] relative my-[18px]"
+        <div className="w-full h-[40px] text-[18px] font-[600] mb-[15px] rounded-[5px] flex items-center no-underline text-[#1a1a1a] relative"
              style={{ backgroundColor: bgColorWithOpacity }}>
               <span
                   className="absolute left-0 top-0 h-full w-[10px] rounded-[5px]"

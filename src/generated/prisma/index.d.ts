@@ -10980,12 +10980,12 @@ export namespace Prisma {
 
   export type AnimeWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    titleUa?: string
+    titleEn?: string
+    titleJp?: string
     AND?: AnimeWhereInput | AnimeWhereInput[]
     OR?: AnimeWhereInput[]
     NOT?: AnimeWhereInput | AnimeWhereInput[]
-    titleUa?: StringNullableFilter<"Anime"> | string | null
-    titleEn?: StringFilter<"Anime"> | string
-    titleJp?: StringNullableFilter<"Anime"> | string | null
     description?: StringNullableFilter<"Anime"> | string | null
     rating?: StringNullableFilter<"Anime"> | string | null
     kind?: StringFilter<"Anime"> | string
@@ -10996,7 +10996,7 @@ export namespace Prisma {
     studioId?: IntNullableFilter<"Anime"> | number | null
     studio?: XOR<StudioNullableScalarRelationFilter, StudioWhereInput> | null
     genres?: AnimeGenreOnAnimeListRelationFilter
-  }, "id">
+  }, "id" | "titleUa" | "titleEn" | "titleJp">
 
   export type AnimeOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11075,12 +11075,12 @@ export namespace Prisma {
 
   export type MangaWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    titleUa?: string
+    titleEn?: string
+    titleJp?: string
     AND?: MangaWhereInput | MangaWhereInput[]
     OR?: MangaWhereInput[]
     NOT?: MangaWhereInput | MangaWhereInput[]
-    titleUa?: StringNullableFilter<"Manga"> | string | null
-    titleEn?: StringFilter<"Manga"> | string
-    titleJp?: StringNullableFilter<"Manga"> | string | null
     description?: StringNullableFilter<"Manga"> | string | null
     kind?: StringFilter<"Manga"> | string
     chapters?: IntNullableFilter<"Manga"> | number | null
@@ -11091,7 +11091,7 @@ export namespace Prisma {
     publisherId?: IntNullableFilter<"Manga"> | number | null
     publisher?: XOR<PublisherNullableScalarRelationFilter, PublisherWhereInput> | null
     genres?: MangaGenreOnMangaListRelationFilter
-  }, "id">
+  }, "id" | "titleUa" | "titleEn" | "titleJp">
 
   export type MangaOrderByWithAggregationInput = {
     id?: SortOrder

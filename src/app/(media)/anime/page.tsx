@@ -1,15 +1,19 @@
 import { AnimeCardType2 } from '@/types/types';
 import SectionInfo from '@/components/SectionInfo';
 import {MediaCard} from "@/components/MediaCard";
+import Link from "next/link";
 
 export default async function Page() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/anime`);
     const allAnime: AnimeCardType2[] = await res.json();
 
     return (
-        <main className=" flex flex-wrap">
+        <main className="flex flex-col">
             <SectionInfo text='Каталог аніме'/>
-            <div className="content_block flex flex-wrap gap-[8px] justify-between">
+            <div className='flex mb-[20px] text-[18px]'>
+                <Link href='/anime/create'>Створити аніме</Link>
+            </div>
+            <div className="content_block flex flex-wrap gap-[9.7434px]">
                 {allAnime.map((anime) => (
                     <MediaCard
                         type="anime"

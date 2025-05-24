@@ -1,15 +1,19 @@
-import {MediaCard} from "@/components/MediaCard";
 import { MangaCardType2 } from "@/types/types";
 import SectionInfo from '@/components/SectionInfo';
+import {MediaCard} from "@/components/MediaCard";
+import Link from "next/link";
 
 export default async function Page() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/manga`);
     const allManga: MangaCardType2[] = await res.json();
 
     return (
-        <main className="flex flex-wrap">
+        <main className="flex flex-col">
             <SectionInfo text='Каталог манги'/>
-            <div className="content_block flex flex-wrap gap-[8px] justify-between">
+            <div className='flex mb-[20px] text-[18px]'>
+                <Link href='/manga/create'>Створити мангу</Link>
+            </div>
+            <div className="content_block flex flex-wrap gap-[9.7434px]">
                 {allManga.map((manga) => (
                     <MediaCard
                         type="manga"

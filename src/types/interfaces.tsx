@@ -5,3 +5,5 @@ export interface PagePromise {
 export interface Params {
     params: { id: string };
 }
+
+// для форми

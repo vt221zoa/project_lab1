@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 export async function GET() {
     try {
         const ongoingAnime = await prisma.anime.findMany({
-            where: { status: 'Вийшло' },
+            where: { status: 'Онгоїнг' },
             include: {
                 studio: true,
             },

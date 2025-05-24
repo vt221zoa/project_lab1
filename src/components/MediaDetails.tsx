@@ -4,6 +4,10 @@ import Image from 'next/image';
 import SectionInfo from '@/components/SectionInfo';
 import { AnimeFullType, MangaFullType } from '@/types/types';
 import Link from "next/link";
+import { buildCloudinaryUrl } from '@/utils/cloudinary';
+import React from "react";
+import EditDeleteControls from "@/components/EditDeleteControls";
+import {useRouter} from "next/navigation";
 
 const FALLBACK_IMAGE = '/static/not-found.png';
 
@@ -15,27 +19,34 @@ type Props = {
 export default function MediaDetails({ type, data }: Props) {
     const isAnime = (data: AnimeFullType | MangaFullType): data is AnimeFullType  => !(data as MangaFullType).chapters;
 
-
     const imgSrc =
         data.imageUrl && data.imageUrl.trim() !== ''
             ? data.imageUrl.startsWith('http')
                 ? data.imageUrl
-                : `/image/${type}/${data.imageUrl}`
+                : buildCloudinaryUrl(data.imageUrl, type)
             : FALLBACK_IMAGE;
 
     const genres = data.genres?.map((g) =>
         isAnime(data) ? g.genre?.name : g.genre?.name
     ).filter(Boolean).join(', ');
 
+    const router = useRouter();
+
     return (
         <div>
-            <h1 className="font-bold my-[12px]">
+            <h1 className="flex flex-row items-center font-bold my-[12px]">
                 {[data.titleUa, data.titleEn, data.titleJp]
                     .filter(Boolean)
                     .join(' / ')
                 }
             </h1>
-
+            <EditDeleteControls
+                type={type}
+                id={data.id}
+                onDelete={() => {
+                    router.push('/anime');
+                }}
+            />
             <div className="grid grid-cols-[270px_minmax(300px,1fr)_minmax(300px,1fr)] gap-[20px] mb-[7px] items-start">
 
                 {/* Зображення */}
@@ -63,8 +74,8 @@ export default function MediaDetails({ type, data }: Props) {
                         {data.dateRelease && (
                             <div><b>Дата релізу:</b> {new Date(data.dateRelease).toLocaleDateString()}</div>
                         )}
-                        <div><b>Жанри:</b> {genres || '—'}</div>
                         {isAnime(data) && <div><b>Віковий рейтинг:</b> {data.rating ?? '—'}</div>}
+                        <div><b>Жанри:</b> {genres || '—'}</div>
                     </div>
                 </div>
 
@@ -84,7 +95,7 @@ export default function MediaDetails({ type, data }: Props) {
                                         alt={data.studio.name}
                                         width={400}
                                         height={0}
-                                        className="w-full h-auto max-h-[100px] rounded object-contain"
+                                        className="h-auto max-h-[100px] rounded object-contain"
                                     />
                                 ) : (
                                     <span className="w-full">{data.studio.name}</span>

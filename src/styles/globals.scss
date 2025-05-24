@@ -33,3 +33,40 @@ body {
   z-index: -1;
 }
 
+.media-form div > input,
+.media-form div > select {
+  width: 312px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid black;
+}
+.media-form > div{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.media-form label {
+  min-width: 170px;
+  display: inline-block;
+}
+
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #a78bfa #eee;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  background: #eee;
+  border-radius: 100px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+  border-radius: 100px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed;
+}

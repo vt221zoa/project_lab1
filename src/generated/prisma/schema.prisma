@@ -40,11 +40,11 @@ model Anime {
   id Int @id @default(autoincrement())
 
   /// Назва аніме українською
-  titleUa String?
+  titleUa String? @unique
   /// Назва аніме англійською
-  titleEn String
+  titleEn String  @unique
   /// Назва аніме японською
-  titleJp String?
+  titleJp String? @unique
 
   /// Опис аніме
   description String?
@@ -74,11 +74,11 @@ model Manga {
   id Int @id @default(autoincrement())
 
   /// Назва манги українською
-  titleUa String?
+  titleUa String? @unique
   /// Назва манги англійскьою
-  titleEn String
+  titleEn String  @unique
   /// Назва манги японською
-  titleJp String?
+  titleJp String? @unique
 
   /// Опис манги
   description String?

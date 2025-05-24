@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -40,11 +34,11 @@ model Anime {
   id Int @id @default(autoincrement())
 
   /// Назва аніме українською
-  titleUa String?
+  titleUa String? @unique
   /// Назва аніме англійською
-  titleEn String
+  titleEn String  @unique
   /// Назва аніме японською
-  titleJp String?
+  titleJp String? @unique
 
   /// Опис аніме
   description String?
@@ -74,11 +68,11 @@ model Manga {
   id Int @id @default(autoincrement())
 
   /// Назва манги українською
-  titleUa String?
+  titleUa String? @unique
   /// Назва манги англійскьою
-  titleEn String
+  titleEn String  @unique
   /// Назва манги японською
-  titleJp String?
+  titleJp String? @unique
 
   /// Опис манги
   description String?

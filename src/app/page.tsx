@@ -19,7 +19,7 @@ export default function Home() {
   return (
       <main>
           <SectionTitle text="Зараз на екранах"/>
-          <div className="content_block flex flex-wrap justify-between">
+          <div className="content_block flex flex-wrap gap-[9.7434px]">
           {animes.map((anime) => (
               <MediaCard
                   type='anime'

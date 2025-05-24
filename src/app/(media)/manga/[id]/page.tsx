@@ -1,8 +1,10 @@
 import MediaDetails from '@/components/MediaDetails';
 import {MangaFullType} from '@/types/types';
+import { PagePromise } from "@/types/interfaces";
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const mangaId = params.id;
+export default async function Page({ params }: PagePromise) {
+    const { id } = await params;
+    const mangaId = Number(id);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/manga/${mangaId}`);
     if (!res.ok) {
