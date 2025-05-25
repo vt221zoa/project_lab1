@@ -75,15 +75,23 @@ export type MangaCardType2 = {
 }
 
 // Виведення профілю (ще не реалізовано)
-export type UserHeaderType = {
-    id: number;
-    name: string;
-    imageUrl?: string | null;
-}
-
 export type UserProfile = {
     id: string;
     name: string;
     email: string;
     imageUrl?: string | null;
+    isAdmin?: boolean;
+}
+
+export type UseCurrentUser = {
+    user: UserProfile | null;
+    loading: boolean;
+    error: boolean;
+};
+
+
+export interface JwtPayload {
+    userId: string;
+    email: string;
+    isAdmin: boolean;
 }

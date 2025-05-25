@@ -19,7 +19,7 @@ model User {
   /// Пароль користувача
   password String
   /// Ім'я користувача
-  name     String
+  name     String @unique
 
   /// Ззображення користувача
   imageUrl  String?

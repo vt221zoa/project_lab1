@@ -1,7 +1,7 @@
 import SectionInfo from '@/components/SectionInfo';
 import {MediaCard} from "@/components/media/MediaCard";
-import Link from "next/link";
 import {getAllMangas} from "@/lib/data/manga";
+import CreateAdminButton from "@/components/media/forms/CreateAdminButton";
 
 export default async function Page() {
     const allManga = await getAllMangas();
@@ -9,9 +9,7 @@ export default async function Page() {
     return (
         <main className="flex flex-col">
             <SectionInfo text='Каталог манги'/>
-            <div className='flex mb-[20px] text-[18px]'>
-                <Link href='/manga/create'>Створити мангу</Link>
-            </div>
+            <CreateAdminButton type="manga" />
             <div className="content_block flex flex-wrap gap-[9.7434px]">
                 {allManga.map((manga) => (
                     <MediaCard

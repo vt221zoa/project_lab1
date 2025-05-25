@@ -104,10 +104,13 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
         }
     };
 
+    const [error, setError] = useState("");
+
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         let uploadedImageUrl = form.imageUrl;
 
@@ -123,11 +126,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                     method: 'POST',
                     body: formData
                 });
-
             if (!res.ok) {
                 const errorData = await res.json();
-                console.error("Cloudinary Error:", errorData);
-                alert("Не вдалося завантажити зображення на Cloudinary");
+                setError("Помилка при завантаженні зображення: " + (errorData.error?.message || "Unknown error"));
                 return;
             }
             const data = await res.json();
@@ -151,23 +152,28 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
             method = 'PATCH';
         }
 
-        await fetch(url, {
-            method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(submitData),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Успішно!");
-                    router.push(`/anime/${animeId || data.anime?.id}`);
-                } else {
-                    alert("Помилка");
-                }
-            })
-            .catch(() => alert("Сталася помилка"));
-    };
+        try {
+            const res = await fetch(url, {
+                method,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(submitData),
+            });
 
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                setError("");
+                alert("Успішно!");
+                router.push(`/anime/${animeId || data.anime?.id}`);
+            } else {
+                setError(data?.message || data?.error || "Сталася невідома помилка");
+            }
+        } catch {
+            setError("Сталася помилка відправки. Спробуйте ще раз.");
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit} className="grid grid-cols-[270px_minmax(300px,1fr)_minmax(300px,1fr)] gap-[20px] mb-[7px] items-start">
@@ -342,13 +348,19 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                     onChange={handleChange}
                 />
             </div>
-
-            <button
-                type="submit"
-                className="col-start-1 row-start-2"
-            >
-                {initialData ? "Оновити аніме" : "Створити аніме"}
-            </button>
+            <div className="col-start-1 row-start-2 flex flex-col" >
+                <button
+                    type="submit"
+                    className=""
+                >
+                    {initialData ? "Оновити аніме" : "Створити аніме"}
+                </button>
+                {error && (
+                    <div style={{ color: "red", gridColumn: "1 / -1", marginTop: 6 }}>
+                        {error}
+                    </div>
+                )}
+            </div>
         </form>
     );
 }

@@ -2,7 +2,6 @@ import SectionTitle from "@/components/SectionTitle";
 import {MediaCard} from "@/components/media/MediaCard";
 import { getOngoingAnimes } from "@/lib/data/anime";
 
-
 export default async function Home() {
     const animes = await getOngoingAnimes();
 

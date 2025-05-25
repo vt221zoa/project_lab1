@@ -6,6 +6,7 @@ import Link from 'next/link';
 import {buildCloudinaryUrl} from "@/utils/cloudinary";
 import EditDeleteControls from '../EditDeleteControls';
 import { useRouter } from 'next/navigation';
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 const FALLBACK_IMAGE = '/static/not-found.png';
 
@@ -32,6 +33,8 @@ type MediaCardProps = CardType & {
 };
 
 export const MediaCard: React.FC<MediaCardProps> = (props) => {
+    const { user } = useCurrentUser();
+
     const {
         id,
         titleUa,
@@ -89,17 +92,15 @@ export const MediaCard: React.FC<MediaCardProps> = (props) => {
                     )}
                 </div>
             </Link>
-            {viewType === 'catalog' ? (
-                    <EditDeleteControls
-                        type={type}
-                        id={id}
-                        onDelete={() => {
-                            router.refresh();
-                        }}
-                    />
-            )
-                : null
-            }
+            {viewType === 'catalog' && user?.isAdmin ? (
+                <EditDeleteControls
+                    type={type}
+                    id={id}
+                    onDelete={() => {
+                        router.refresh();
+                    }}
+                />
+            ) : null}
         </div>
     );
 };

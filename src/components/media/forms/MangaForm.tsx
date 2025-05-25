@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import SectionInfo from "@/components/SectionInfo";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Genre = { id: number; name: string };
 type Publisher = { id: number; name: string };

@@ -13,7 +13,7 @@ export default async function Page({ params }: PagePromise) {
     }
 
     return (
-        <main className="p-4">
+        <main>
             <MediaDetails type="manga" data={manga} />
         </main>
     );

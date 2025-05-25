@@ -1,7 +1,7 @@
 import SectionInfo from '@/components/SectionInfo';
 import {MediaCard} from "@/components/media/MediaCard";
-import Link from "next/link";
 import {getAllAnimes} from "@/lib/data/anime";
+import CreateAdminButton from "@/components/media/forms/CreateAdminButton"
 
 export default async function Page() {
     const allAnime = await getAllAnimes();
@@ -9,9 +9,7 @@ export default async function Page() {
     return (
         <main className="flex flex-col">
             <SectionInfo text='Каталог аніме'/>
-            <div className='flex mb-[20px] text-[18px]'>
-                <Link href='/anime/create'>Створити аніме</Link>
-            </div>
+            <CreateAdminButton type="anime" />
             <div className="content_block flex flex-wrap gap-[9.7434px]">
                 {allAnime.map((anime) => (
                     <MediaCard

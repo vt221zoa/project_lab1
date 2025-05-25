@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React from 'react';
+import {useCurrentUser} from "@/hooks/useCurrentUser";
 
 type Props = {
     type: string;
@@ -10,6 +11,11 @@ type Props = {
 };
 
 const EditDeleteControls: React.FC<Props> = ({ type, id, onDelete }) => {
+    const { user, loading } = useCurrentUser();
+
+    if (loading) return null;
+    if (!user?.isAdmin) return null;
+
     const handleDelete = async () => {
         if (!confirm('Підтвердити видалення?')) return;
 

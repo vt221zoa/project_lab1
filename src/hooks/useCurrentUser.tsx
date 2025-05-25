@@ -1,16 +1,35 @@
 'use client'
 import { useEffect, useState } from "react";
+import {UseCurrentUser, UserProfile} from '@/types/types'
 
-export function useCurrentUser() {
-    const [user, setUser] = useState<{ id: string, name: string, email: string, imageUrl?: string } | null>(null);
+export function useCurrentUser(): UseCurrentUser {
+    const [user, setUser] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
+        let ignore = false;
+        setLoading(true);
         fetch('/api/profile', { credentials: "include" })
-            .then(res => res.json())
-            .then(data => { setUser(data.user); setLoading(false); })
-            .catch(() => setLoading(false));
+            .then(async (res) => {
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                if (!ignore) {
+                    setUser(data.user);
+                    setLoading(false);
+                }
+            })
+            .catch(() => {
+                if (!ignore) {
+                    setUser(null);
+                    setLoading(false);
+                    setError(true);
+                }
+            });
+
+        return () => { ignore = true };
     }, []);
 
-    return { user, loading };
+    return { user, loading, error };
 }
+

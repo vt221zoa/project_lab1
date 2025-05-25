@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prisma } from "@/lib/prisma";
 
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret";
+const JWT_SECRET = process.env.JWT_SECRET || "-DhhAU)eVRtKaD;1J\"d4)_$5`pnx<RQ}";
 
 export async function POST(req: NextRequest) {
     try {
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
-            secure: process.env.NODE_ENV === "production",
+            // secure: process.env.NODE_ENV === "production",
             maxAge: 60 * 60 * 24 * 7,
         });
 
