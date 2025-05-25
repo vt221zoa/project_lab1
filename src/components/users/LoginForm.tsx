@@ -1,0 +1,52 @@
+'use client'
+import React, { useState } from "react";
+import Link from "next/link";
+
+export default function LoginForm() {
+    const [form, setForm] = useState({ email: "", password: "" });
+    const [error, setError] = useState("");
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+        const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(form),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            setError(data.message || "Помилка");
+            return;
+        }
+        window.location.href = "/";
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <h2>Вхід</h2>
+            <input
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required
+            />
+            <input
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                value={form.password}
+                onChange={handleChange}
+                required
+            />
+            <button type="submit">Увійти</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <Link href='/auth/register'>Ще не маєте профілю?</Link>
+        </form>
+    );
+}

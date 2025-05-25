@@ -1,5 +1,5 @@
 import type { AnimeFullType } from '@/types/types';
-import type { AnimeData } from '@/components/AnimeForm';
+import type { AnimeData } from '@/components/media/forms/AnimeForm';
 
 export function mapAnimeFullTypeToAnimeData(anime: AnimeFullType | null | undefined): AnimeData | undefined {
     if (!anime) return undefined;

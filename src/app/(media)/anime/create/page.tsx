@@ -1,4 +1,4 @@
-import AnimeForm from '@/components/AnimeForm';
+import AnimeForm from '@/components/media/forms/AnimeForm';
 import {getAllGenres} from "@/lib/data/genre";
 import {getAllStudios} from "@/lib/data/studio";
 

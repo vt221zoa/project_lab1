@@ -1,5 +1,5 @@
 import SectionInfo from '@/components/SectionInfo';
-import {MediaCard} from "@/components/MediaCard";
+import {MediaCard} from "@/components/media/MediaCard";
 import Link from "next/link";
 import {getAllMangas} from "@/lib/data/manga";
 

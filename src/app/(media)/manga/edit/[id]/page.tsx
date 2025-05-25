@@ -2,7 +2,7 @@ import {PagePromise} from "@/types/interfaces";
 import {getAllGenres} from "@/lib/data/genre";
 import {getMangaById} from "@/lib/data/manga";
 import {getAllPublishers} from "@/lib/data/publisher";
-import MangaForm from "@/components/MangaForm";
+import MangaForm from "@/components/media/forms/MangaForm";
 import {mapMangaFullTypeToMangaData} from "@/lib/data/adapters/manga";
 
 export default async function Page({ params }: PagePromise) {

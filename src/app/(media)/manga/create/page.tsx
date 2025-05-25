@@ -1,4 +1,4 @@
-import MangaForm from '@/components/MangaForm';
+import MangaForm from '@/components/media/forms/MangaForm';
 import {getAllGenres} from "@/lib/data/genre";
 import {getAllPublishers} from "@/lib/data/publisher";
 

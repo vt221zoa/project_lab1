@@ -1,5 +1,5 @@
 import React from 'react';
-import { MediaCard } from '@/components/MediaCard';
+import { MediaCard } from '@/components/media/MediaCard';
 import { notFound } from "next/navigation";
 import {getMangaByPublisherId} from "@/lib/data/publisher";
 

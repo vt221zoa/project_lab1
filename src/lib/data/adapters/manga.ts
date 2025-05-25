@@ -1,5 +1,5 @@
 import type { MangaFullType } from '@/types/types';
-import type { MangaData } from '@/components/MangaForm';
+import type { MangaData } from '@/components/media/forms/MangaForm';
 
 export function mapMangaFullTypeToMangaData(manga: MangaFullType | null | undefined): MangaData | undefined {
     if (!manga) return undefined;

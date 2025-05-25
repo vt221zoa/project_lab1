@@ -1,4 +1,4 @@
-import AnimeForm from '@/components/AnimeForm';
+import AnimeForm from '@/components/media/forms/AnimeForm';
 import {PagePromise} from "@/types/interfaces";
 import {getAllGenres} from "@/lib/data/genre";
 import {getAnimeById} from "@/lib/data/anime";

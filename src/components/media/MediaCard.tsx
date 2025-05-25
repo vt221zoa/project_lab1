@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
 import {buildCloudinaryUrl} from "@/utils/cloudinary";
-import EditDeleteControls from './EditDeleteControls';
+import EditDeleteControls from '../EditDeleteControls';
 import { useRouter } from 'next/navigation';
 
 const FALLBACK_IMAGE = '/static/not-found.png';

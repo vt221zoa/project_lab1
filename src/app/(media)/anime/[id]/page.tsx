@@ -1,4 +1,4 @@
-import MediaDetails from '@/components/MediaDetails';
+import MediaDetails from '@/components/media/MediaDetails';
 import { PagePromise } from "@/types/interfaces";
 import {getAnimeById} from "@/lib/data/anime";
 

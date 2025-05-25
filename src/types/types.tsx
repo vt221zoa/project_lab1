@@ -81,4 +81,9 @@ export type UserHeaderType = {
     imageUrl?: string | null;
 }
 
-
+export type UserProfile = {
+    id: string;
+    name: string;
+    email: string;
+    imageUrl?: string | null;
+}
