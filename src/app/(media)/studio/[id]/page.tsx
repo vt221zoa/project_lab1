@@ -1,28 +1,18 @@
 import React from 'react';
-import { AnimeCardType2 } from '@/types/types';
 import {MediaCard} from "@/components/MediaCard";
 import {notFound} from "next/navigation";
+import {getAnimeByStudioId} from "@/lib/data/studio";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studio/${id}`, {
-        cache: 'no-store',
-    });
+    const studioId = Number(id);
+    const animeList  = await getAnimeByStudioId(studioId);
 
-    if (!res.ok) {
+    if (!animeList .length || !animeList [0].studio) {
         notFound();
     }
 
-    const animeList: AnimeCardType2[] = await res.json();
-    if (!animeList[0]?.studio) {
-        return (
-            <div className="text-2xl font-bold mb-4 text-red-600">
-                Студію не знайдено
-            </div>
-        );
-    }
-
-    const studioName = animeList[0].studio.name;
+    const studioName = animeList [0].studio!.name;
 
     return (
         <div className="p-4">

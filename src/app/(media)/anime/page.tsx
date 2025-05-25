@@ -1,11 +1,10 @@
-import { AnimeCardType2 } from '@/types/types';
 import SectionInfo from '@/components/SectionInfo';
 import {MediaCard} from "@/components/MediaCard";
 import Link from "next/link";
+import {getAllAnimes} from "@/lib/data/anime";
 
 export default async function Page() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/anime`);
-    const allAnime: AnimeCardType2[] = await res.json();
+    const allAnime = await getAllAnimes();
 
     return (
         <main className="flex flex-col">

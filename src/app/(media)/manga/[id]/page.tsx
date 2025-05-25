@@ -1,17 +1,16 @@
 import MediaDetails from '@/components/MediaDetails';
-import {MangaFullType} from '@/types/types';
 import { PagePromise } from "@/types/interfaces";
+import {getMangaById} from "@/lib/data/manga";
 
 export default async function Page({ params }: PagePromise) {
     const { id } = await params;
     const mangaId = Number(id);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/manga/${mangaId}`);
-    if (!res.ok) {
+    const manga= await getMangaById(mangaId);
+
+    if (!manga) {
         return <div>Мангу не знайдено</div>;
     }
-
-    const manga: MangaFullType = await res.json();
 
     return (
         <main className="p-4">

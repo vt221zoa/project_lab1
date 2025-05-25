@@ -8,7 +8,7 @@ import {useRouter} from "next/navigation";
 type Genre = { id: number; name: string };
 type Publisher = { id: number; name: string };
 
-interface MangaData {
+export interface MangaData {
     titleUa: string;
     titleEn: string;
     titleJp: string;
@@ -62,6 +62,7 @@ export default function MangaForm({ initialData, publishers, genres, mangaId}: M
         publisherId: initialData?.publisher?.id?.toString() || "",
         genreIds: initialData?.genres?.map((g: { genre: Genre }) => g.genre.id) || [],
     });
+
 
     const [imageFile, setImageFile] = useState<File | null>(null);
 

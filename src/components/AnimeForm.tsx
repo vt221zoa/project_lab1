@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 type Studio = { id: number; name: string };
 type Genre = { id: number; name: string };
 
-interface AnimeData {
+export interface AnimeData {
     titleUa: string;
     titleEn: string;
     titleJp: string;

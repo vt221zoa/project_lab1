@@ -1,10 +1,10 @@
 import AnimeForm from '@/components/AnimeForm';
+import {getAllGenres} from "@/lib/data/genre";
+import {getAllStudios} from "@/lib/data/studio";
 
 export default async function Page() {
-    const genresRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genre`, { cache: 'no-store' });
-    const studiosRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studio`, { cache: 'no-store' });
-    const genre = await genresRes.json();
-    const studio = await studiosRes.json();
+    const genre = await getAllGenres();
+    const studio = await getAllStudios();
 
     return (
         <div>

@@ -1,11 +1,10 @@
-import { MangaCardType2 } from "@/types/types";
 import SectionInfo from '@/components/SectionInfo';
 import {MediaCard} from "@/components/MediaCard";
 import Link from "next/link";
+import {getAllMangas} from "@/lib/data/manga";
 
 export default async function Page() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/manga`);
-    const allManga: MangaCardType2[] = await res.json();
+    const allManga = await getAllMangas();
 
     return (
         <main className="flex flex-col">

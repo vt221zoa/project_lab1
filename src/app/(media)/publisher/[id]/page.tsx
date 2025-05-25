@@ -1,24 +1,18 @@
 import React from 'react';
-import { MangaCardType2 } from '@/types/types';
 import { MediaCard } from '@/components/MediaCard';
 import { notFound } from "next/navigation";
+import {getMangaByPublisherId} from "@/lib/data/publisher";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/publisher/${id}`, {
-        cache: 'no-store',
-    });
+    const publisherId = Number(id);
+    const mangaList  = await getMangaByPublisherId(publisherId);
 
-    if (!res.ok) {
-        notFound();
-    }
-    const mangaList: MangaCardType2[] = await res.json();
-
-    if (!mangaList[0]?.publisher) {
+    if (!mangaList .length || !mangaList [0].publisher) {
         notFound();
     }
 
-    const publisherName = mangaList[0].publisher.name;
+    const publisherName = mangaList [0].publisher!.name;
 
     return (
         <div className="p-4">

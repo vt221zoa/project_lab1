@@ -1,7 +1,7 @@
 // Виведення аніме повністю
 export type AnimeFullType = {
     id: number;
-    titleUa?: string | null;
+    titleUa?: string;
     titleEn: string;
     titleJp?: string;
     description?: string;
@@ -53,14 +53,12 @@ export type MangaFullType = {
 // Виведення аніме частково
 export type AnimeCardType2 = {
     id: number;
-    titleUa?: string;
+    titleUa?: string | null;
     titleEn: string;
     kind: string;
-    dateRelease?: string;
-    imageUrl: string;
-    studio?: {
-        name?: string;
-    };
+    dateRelease?: string | null;
+    imageUrl?: string | null;
+    studio?: { name?: string };
 };
 
 // Виведення манги частково

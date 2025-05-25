@@ -1,10 +1,10 @@
 import MangaForm from '@/components/MangaForm';
+import {getAllGenres} from "@/lib/data/genre";
+import {getAllPublishers} from "@/lib/data/publisher";
 
 export default async function Page() {
-    const genresRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genre`, { cache: 'no-store' });
-    const publisherRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/publisher`, { cache: 'no-store' });
-    const genre = await genresRes.json();
-    const publisher = await publisherRes.json();
+    const genre = await getAllGenres();
+    const publisher = await getAllPublishers()
 
     return (
         <div>

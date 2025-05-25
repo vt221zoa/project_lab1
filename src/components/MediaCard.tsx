@@ -11,11 +11,11 @@ const FALLBACK_IMAGE = '/static/not-found.png';
 
 type BaseCardType = {
     id: number;
-    titleUa?: string;
+    titleUa?: string | null;
     titleEn: string;
     kind?: string;
-    dateRelease?: string;
-    imageUrl?: string;
+    dateRelease?: string | null;
+    imageUrl?: string | null;
 };
 
 type AnimeCardType = BaseCardType & { studioName?: string };
@@ -43,6 +43,7 @@ export const MediaCard: React.FC<MediaCardProps> = (props) => {
         dateRelease,
     } = props;
 
+
     const extraName =
         type === 'anime'
             ? (props as AnimeCardType).studioName ?? ''
@@ -60,7 +61,7 @@ export const MediaCard: React.FC<MediaCardProps> = (props) => {
     const router = useRouter();
 
     return (
-        <div>
+        <div className='max-w-[210px]'>
             <Link
                 href={`/${type}/${id}`}
                 className="w-[210px] no-underline text-[#1a1a1a] flex-shrink-0 mb-[20px]"
@@ -74,7 +75,7 @@ export const MediaCard: React.FC<MediaCardProps> = (props) => {
                 />
                 <div className="mt-[3px]">
                     <h3 className="text-[16px] text-[#3000B4] font-bold truncate max-w-[280px] m-[0px]">
-                        {titleUa ?? titleEn}
+                        {titleUa?.trim() ? titleUa : titleEn}
                     </h3>
                     {viewType === 'catalog' ? (
                         <div className="flex justify-between text-[14px] text-[#6b6b6b] max-w-[280px] mt-[3px] ml-0">
