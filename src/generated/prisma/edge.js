@@ -35,11 +35,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
+ * Prisma Client JS version: 6.9.0-dev.25
  * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
+  client: "6.9.0-dev.25",
   engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
 }
 
@@ -196,7 +196,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\university\\3 курс\\2 семестр\\next-js\\course_project\\src\\generated\\prisma",
+      "value": "C:\\projects\\course_work\\course_project\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -207,10 +207,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\university\\3 курс\\2 семестр\\next-js\\course_project\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\projects\\course_work\\course_project\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -218,12 +222,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.8.2",
+  "clientVersion": "6.9.0-dev.25",
   "engineVersion": "2060c79ba17c6bb9f5823312b6f6b7f4a845738e",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -232,8 +237,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n/// Користувачі\nmodel User {\n  /// Ідентифікатор користувача\n  id String @id @default(cuid())\n\n  /// Унікальна почта користувача\n  email    String @unique\n  /// Пароль користувача\n  password String\n  /// Ім'я користувача\n  name     String\n\n  /// Ззображення користувача\n  imageUrl  String?\n  /// Чи є адміном користувач?\n  isAdmin   Boolean  @default(false) // В подальшому розвитку сайту треба буде додати ролі для них\n  /// Коли створений користувач?\n  createdAt DateTime @default(now())\n}\n\n/// Аніме\nmodel Anime {\n  /// Ідентифікатор аніме\n  id Int @id @default(autoincrement())\n\n  /// Назва аніме українською\n  titleUa String? @unique\n  /// Назва аніме англійською\n  titleEn String  @unique\n  /// Назва аніме японською\n  titleJp String? @unique\n\n  /// Опис аніме\n  description String?\n  /// Віковий рейтинг аніме\n  rating      String?\n  /// Тип аніме (TV-серіал, Фільм і тощо)\n  kind        String\n  /// Кількість випущених серій в епізоді\n  episodes    Int?\n  /// Статус аніме (онгоїнг, вийшло, ще випускається)\n  status      String\n  /// Коли створене аніме\n  dateRelease DateTime?\n\n  /// Зображення аніме в URL\n  imageUrl String?\n  /// Студія яка виробляла це аніме\n  studioId Int?\n  studio   Studio?             @relation(fields: [studioId], references: [id])\n  /// Жанри аніме\n  genres   AnimeGenreOnAnime[]\n}\n\n/// Манга\nmodel Manga {\n  /// Ідентифікатор манги\n  id Int @id @default(autoincrement())\n\n  /// Назва манги українською\n  titleUa String? @unique\n  /// Назва манги англійскьою\n  titleEn String  @unique\n  /// Назва манги японською\n  titleJp String? @unique\n\n  /// Опис манги\n  description String?\n  /// Тип манги (Манга, Манхва і тощо)\n  kind        String\n  /// Кількість розділів в творі\n  chapters    Int?\n  /// Кількість томів в творі\n  volumes     Int?\n  /// Дата релізу манги\n  dateRelease DateTime?\n  /// Статус манги (Видається, Видано і тощо)\n  status      String\n\n  /// Зображення манги\n  imageUrl    String?\n  /// Видавництва які випускають мангу\n  publisherId Int?\n  publisher   Publisher?          @relation(fields: [publisherId], references: [id])\n  /// Жанри\n  genres      MangaGenreOnManga[]\n}\n\n/// Жанри аніме\nmodel Genre {\n  id     Int                 @id @default(autoincrement())\n  /// Назва жанру\n  name   String              @unique\n  nameEn String?             @unique\n  /// Зв'язок жанру і аніме\n  animes AnimeGenreOnAnime[]\n  mangas MangaGenreOnManga[]\n}\n\n/// Зв'язки аніме та жанрів\nmodel AnimeGenreOnAnime {\n  animeId Int\n  anime   Anime @relation(fields: [animeId], references: [id])\n  genreId Int\n  genre   Genre @relation(fields: [genreId], references: [id])\n\n  @@id([animeId, genreId])\n}\n\n/// Зв'язки манги та жанрів\nmodel MangaGenreOnManga {\n  mangaId Int\n  manga   Manga @relation(fields: [mangaId], references: [id])\n  genreId Int\n  genre   Genre @relation(fields: [genreId], references: [id])\n\n  @@id([mangaId, genreId])\n}\n\n/// Студія\nmodel Studio {\n  /// Ідентифікатор студії\n  id      Int     @id @default(autoincrement())\n  /// Назва студії\n  name    String  @unique\n  /// Зображення студії\n  logoUrl String?\n  /// Студії які виробляли аніме\n  animes  Anime[]\n}\n\n/// Видавництва\nmodel Publisher {\n  /// Ідентифікатор видавництва\n  id     Int     @id @default(autoincrement())\n  /// Назва видавництва\n  name   String  @unique\n  /// Видавництва які видають манги\n  mangas Manga[]\n}\n",
-  "inlineSchemaHash": "89ce0329fb1b6b27c6fe9891082cd3eb9c90cabfe156d0c407822d665dccda7e",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n/// Користувачі\nmodel User {\n  /// Ідентифікатор користувача\n  id String @id @default(cuid())\n\n  /// Унікальна почта користувача\n  email    String @unique\n  /// Пароль користувача\n  password String\n  /// Ім'я користувача\n  name     String\n\n  /// Ззображення користувача\n  imageUrl  String?\n  /// Чи є адміном користувач?\n  isAdmin   Boolean  @default(false) // В подальшому розвитку сайту треба буде додати ролі для них\n  /// Коли створений користувач?\n  createdAt DateTime @default(now())\n}\n\n/// Аніме\nmodel Anime {\n  /// Ідентифікатор аніме\n  id Int @id @default(autoincrement())\n\n  /// Назва аніме українською\n  titleUa String? @unique\n  /// Назва аніме англійською\n  titleEn String  @unique\n  /// Назва аніме японською\n  titleJp String? @unique\n\n  /// Опис аніме\n  description String?\n  /// Віковий рейтинг аніме\n  rating      String?\n  /// Тип аніме (TV-серіал, Фільм і тощо)\n  kind        String\n  /// Кількість випущених серій в епізоді\n  episodes    Int?\n  /// Статус аніме (онгоїнг, вийшло, ще випускається)\n  status      String\n  /// Коли створене аніме\n  dateRelease DateTime?\n\n  /// Зображення аніме в URL\n  imageUrl String?\n  /// Студія яка виробляла це аніме\n  studioId Int?\n  studio   Studio?             @relation(fields: [studioId], references: [id])\n  /// Жанри аніме\n  genres   AnimeGenreOnAnime[]\n}\n\n/// Манга\nmodel Manga {\n  /// Ідентифікатор манги\n  id Int @id @default(autoincrement())\n\n  /// Назва манги українською\n  titleUa String? @unique\n  /// Назва манги англійскьою\n  titleEn String  @unique\n  /// Назва манги японською\n  titleJp String? @unique\n\n  /// Опис манги\n  description String?\n  /// Тип манги (Манга, Манхва і тощо)\n  kind        String\n  /// Кількість розділів в творі\n  chapters    Int?\n  /// Кількість томів в творі\n  volumes     Int?\n  /// Дата релізу манги\n  dateRelease DateTime?\n  /// Статус манги (Видається, Видано і тощо)\n  status      String\n\n  /// Зображення манги\n  imageUrl    String?\n  /// Видавництва які випускають мангу\n  publisherId Int?\n  publisher   Publisher?          @relation(fields: [publisherId], references: [id])\n  /// Жанри\n  genres      MangaGenreOnManga[]\n}\n\n/// Жанри аніме\nmodel Genre {\n  id     Int                 @id @default(autoincrement())\n  /// Назва жанру\n  name   String              @unique\n  nameEn String?             @unique\n  /// Зв'язок жанру і аніме\n  animes AnimeGenreOnAnime[]\n  mangas MangaGenreOnManga[]\n}\n\n/// Зв'язки аніме та жанрів\nmodel AnimeGenreOnAnime {\n  animeId Int\n  anime   Anime @relation(fields: [animeId], references: [id])\n  genreId Int\n  genre   Genre @relation(fields: [genreId], references: [id])\n\n  @@id([animeId, genreId])\n}\n\n/// Зв'язки манги та жанрів\nmodel MangaGenreOnManga {\n  mangaId Int\n  manga   Manga @relation(fields: [mangaId], references: [id])\n  genreId Int\n  genre   Genre @relation(fields: [genreId], references: [id])\n\n  @@id([mangaId, genreId])\n}\n\n/// Студія\nmodel Studio {\n  /// Ідентифікатор студії\n  id      Int     @id @default(autoincrement())\n  /// Назва студії\n  name    String  @unique\n  /// Зображення студії\n  logoUrl String?\n  /// Студії які виробляли аніме\n  animes  Anime[]\n}\n\n/// Видавництва\nmodel Publisher {\n  /// Ідентифікатор видавництва\n  id     Int     @id @default(autoincrement())\n  /// Назва видавництва\n  name   String  @unique\n  /// Видавництва які видають манги\n  mangas Manga[]\n}\n",
+  "inlineSchemaHash": "f9556ed8a50a5dea1021fedca88e75d6d3d1a5aa464b1070076bf7c66c987bc7",
   "copyEngine": true
 }
 config.dirname = '/'
