@@ -18,18 +18,9 @@ const Header = () => {
                 />
             </Link>
 
-            {/*<div className="mx-6 flex-grow max-w-md">*/}
-            {/*    <input*/}
-            {/*        type="text"*/}
-            {/*        placeholder="Пошук..."*/}
-            {/*        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"*/}
-            {/*    />*/}
-            {/*</div>*/}
-
             <nav className="flex gap-[20px] items-center mr-[140px]" >
                 <Link href="/anime" className="no-underline text-[#ffffff]">Аніме</Link>
                 <Link href="/manga" className="no-underline text-[#ffffff]">Манга</Link>
-                <Link href="/about" className="no-underline text-[#ffffff]">Про нас</Link>
                 {!loading && !user && (
                     <Link href="/auth/login" className="no-underline text-[#ffffff]">Увійти</Link>
                 )}
