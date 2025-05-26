@@ -30,14 +30,18 @@ export default function RegisterForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Реєстрація</h2>
+        <form
+            onSubmit={handleSubmit}
+            className="mt-[12px] flex flex-col gap-[4px] p-[8px] items-center"
+        >
+            <h2 className="font-bold text-center mb-4">Реєстрація</h2>
             <input
                 name="name"
                 placeholder="Ім'я"
                 value={form.name}
                 onChange={handleChange}
                 required
+                className="p-[3px] border border-gray-300"
             />
             <input
                 name="email"
@@ -45,6 +49,7 @@ export default function RegisterForm() {
                 value={form.email}
                 onChange={handleChange}
                 required
+                className="p-[3px] border border-gray-300"
             />
             <input
                 type="password"
@@ -53,10 +58,22 @@ export default function RegisterForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
+                className="py-[3px] border border-gray-300"
             />
-            <button type="submit">Зареєструватися</button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <Link href='/auth/login'>Вже є акаунт?</Link>
+            <button
+                type="submit"
+                className="mt-[4px] px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition"
+            >
+                Зареєструватися
+            </button>
+            {error && (
+                <p className="text-[red] text-center p-[2px]">{error}</p>
+            )}
+            <div className="text-center mt-[2px]">
+                <Link href='/auth/login' className="text-blue-600 hover:underline">
+                    Вже є акаунт?
+                </Link>
+            </div>
         </form>
     );
 }

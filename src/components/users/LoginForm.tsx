@@ -27,14 +27,19 @@ export default function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Вхід</h2>
+        <form
+            onSubmit={handleSubmit}
+            className="mt-[12px] flex flex-col gap-[4px] p-[8px] items-center"
+        >
+            <h2 className=" font-bold text-center mb-4">Вхід</h2>
             <input
                 name="email"
+                type="email"
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
                 required
+                className="p-[3px] border border-gray-300 "
             />
             <input
                 type="password"
@@ -43,10 +48,25 @@ export default function LoginForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
+                className="py-[3px] border border-gray-300"
             />
-            <button type="submit">Увійти</button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <Link href='/auth/register'>Ще не маєте профілю?</Link>
+            <button
+                type="submit"
+            >
+                Увійти
+            </button>
+            {error && (
+                <p className="text-[red] text-center p-[2px]">
+                    {error}
+                </p>
+            )}
+            <div className="text-center mt-[2px]">
+                <Link
+                    href='/auth/register'
+                >
+                    Ще не маєте профілю?
+                </Link>
+            </div>
         </form>
     );
 }
