@@ -54,3 +54,19 @@ export async function getMangaById(mangaId: number): Promise<MangaFullType | nul
     } as MangaFullType;
 }
 
+export async function getOngoingMangas(): Promise<MangaCardType2[]> {
+    const result = await prisma.manga.findMany({
+        where: { status: 'Випускається' },
+        include: { publisher: true },
+    });
+    const shuffled = result.sort(() => Math.random() - 0.5).slice(0, 6);
+    return shuffled.map(m => ({
+        id: m.id,
+        titleUa: m.titleUa ?? '',
+        titleEn: m.titleEn,
+        imageUrl: m.imageUrl ?? '',
+        kind: m.kind,
+        dateRelease: m.dateRelease ? m.dateRelease.toISOString() : '',
+        publisher: m.publisher ? { name: m.publisher.name ?? '' } : undefined,
+    }));
+}

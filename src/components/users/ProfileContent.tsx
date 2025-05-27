@@ -4,12 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function ProfileContent() {
-    const [user, setUser] = useState<{
-        id: string,
-        name: string,
-        email: string,
-        imageUrl?: string
-    } | null>(null);
+    const [user, setUser] = useState<{ id: string, name: string, email: string, imageUrl?: string } | null>(null);
 
     useEffect(() => {
         fetch("/api/profile", { credentials: "include" })
@@ -20,26 +15,51 @@ export default function ProfileContent() {
 
     if (user === undefined) return <div>Завантаження...</div>;
     if (!user) return (
-        <div>
-            Не авторизовано. <Link href="/auth/login">Увійдіть</Link>
+        <div className="flex flex-col items-center gap-4 mt-8">
+            Не авторизовано.
+            <Link className="text-blue-600 font-semibold underline" href="/auth/login">Увійдіть</Link>
         </div>
-    )
+    );
+
+    async function handleLogout() {
+        await fetch("/api/profile/logout", { method: "POST", credentials: "include" });
+        window.location.href = "/";
+        setUser(null);
+    }
 
     return (
-        <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                {user.imageUrl
-                    ? <Image src={user.imageUrl} alt="Аватар" width={70} height={70} style={{borderRadius: 12}} />
-                    : <span style={{
-                        display: 'inline-block', width: 70, height: 70,
-                        background: "#000", borderRadius: 12
-                    }} />}
-                <div>
-                    <div><b>Нікнейм:</b> {user.name}</div>
-                    <div><b>Email:</b> {user.email}</div>
-                    <Link href="/profile/settings"><button>Налаштування профілю</button></Link>
+        <div className="mt-[10px] p-[6px] shadow flex flex-col gap-[6px]">
+            <div className="flex items-center gap-[10px]">
+                {user.imageUrl ? (
+                    <Image
+                        src={user.imageUrl}
+                        alt="Аватар"
+                        width={70}
+                        height={70}
+                    />
+                ) : (
+                    <span className="inline-block w-[70px] h-[70px]" />
+                )}
+                <div className="flex flex-col gap-[2px]">
+                    <div className="font-semibold">Нікнейм: <span className="font-normal">{user.name}</span></div>
+                    <div className="font-semibold">Email: <span className="font-normal">{user.email}</span></div>
+                    <Link href="/profile/settings">
+                        <button
+                            className="mt-[2px] px-[4px]"
+                            type="button"
+                        >
+                            Налаштування профілю
+                        </button>
+                    </Link>
                 </div>
             </div>
+            <button
+                onClick={handleLogout}
+                className="px-[5] py-[2]  mt-[2px] w-[100px]"
+                type="button"
+            >
+                Вийти
+            </button>
         </div>
     );
 }

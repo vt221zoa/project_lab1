@@ -1,9 +1,11 @@
 import SectionTitle from "@/components/SectionTitle";
 import {MediaCard} from "@/components/media/MediaCard";
 import { getOngoingAnimes } from "@/lib/data/anime";
+import { getOngoingMangas } from "@/lib/data/manga";
 
 export default async function Home() {
     const animes = await getOngoingAnimes();
+    const mangas = await getOngoingMangas();
 
   return (
       <main>
@@ -21,6 +23,20 @@ export default async function Home() {
                   />
               ))}
         </div>
+          <SectionTitle type='manga' text="Зараз випускаються"/>
+          <div className="content_block flex flex-wrap gap-[9.7434px]">
+              {mangas.map((manga) => (
+                  <MediaCard
+                      type="manga"
+                      id={manga.id}
+                      key={manga.id}
+                      titleUa={manga.titleUa}
+                      titleEn={manga.titleEn}
+                      imageUrl={manga.imageUrl}
+                      publisherName={manga.publisher?.name ?? ''}
+                  />
+              ))}
+          </div>
       </main>
   );
 }

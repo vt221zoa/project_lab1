@@ -39,14 +39,12 @@ export default function SettingsForm() {
         e.preventDefault();
         setError("");
         setSuccess("");
-
         let finalImageUrl = imageUrl;
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', CLOUDINARY_PRESET);
             formData.append('folder', 'user_avatars');
-
             const upload = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
                 method: 'POST',
                 body: formData,
@@ -58,11 +56,10 @@ export default function SettingsForm() {
             const res = await upload.json();
             finalImageUrl = res.secure_url;
         }
-
         const resp = await fetch("/api/profile", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, imageUrl: finalImageUrl })
+            body: JSON.stringify({ name, imageUrl: finalImageUrl }),
         });
         if (!resp.ok) {
             setError("Не вдалося оновити профіль");
@@ -74,26 +71,55 @@ export default function SettingsForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: 350, display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <label>
+        <form
+            onSubmit={handleSubmit}
+            className="max-w-[350px] flex flex-col gap-[10px]"
+        >
+            <label className="text-[18px] flex flex-col gap-[8px]">
                 Ваш аватар:
-                <br />
-                {imageUrl ? (
-                    <Image src={imageUrl} alt="Аватар" width={80} height={80} />
-                ) : (
-                    <span style={{
-                        display: 'inline-block', width: 80, height: 80, background: "#000", borderRadius: 15
-                    }} />
-                )}
-                <input type="file" accept="image/*" onChange={handleFileChange} />
+                <div className="mb-[6px]">
+                    {imageUrl ? (
+                        <Image
+                            src={imageUrl}
+                            alt="Аватар"
+                            width={80}
+                            height={80}
+                            className="object-cover"
+                        />
+                    ) : (
+                        <span className="inline-block bg-[black] w-[80px] h-[80px]" />
+                    )}
+                </div>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="block text-[14px] mt-[6px]"
+                />
             </label>
-            <label>
+
+            <label className="text-[18px] flex flex-col gap-[5px]">
                 Ваш нікнейм:
-                <input value={name} onChange={e => setName(e.target.value)} placeholder="Ім'я" required />
+                <input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Ім'я"
+                    required
+                    className="px-[12px] py-[7px] border text-[16px]"
+                />
             </label>
-            <button type="submit">Зберегти</button>
-            {error && <div style={{ color: "red" }}>{error}</div>}
-            {success && <div style={{ color: "green" }}>{success}</div>}
+            <button
+                type="submit"
+                className=" py-[10px] text-[16px] "
+            >
+                Зберегти
+            </button>
+            {error && (
+                <div className="text-[15px] mt-[6px] text-[red]">{error}</div>
+            )}
+            {success && (
+                <div className="text-[15px] mt-[6px] text-[green]">{success}</div>
+            )}
         </form>
     );
 }
