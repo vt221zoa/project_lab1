@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { toNullableString } from "@/utils/emptyToNull";
+import {buildUniqueOrConditions} from "@/utils/buildUniqueOrConditions";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -71,32 +73,44 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const { genreIds = [] } = body;
 
     try {
-        await prisma.animeGenreOnAnime.deleteMany({ where: { animeId } });
+        const orConditions = buildUniqueOrConditions(body);
 
+        if (orConditions.length > 0) {
+            const duplicateAnime = await prisma.anime.findFirst({
+                where: {
+                    OR: orConditions,
+                    NOT: { id: animeId },
+                },
+            });
+            if (duplicateAnime) {
+                return NextResponse.json(
+                    { error: 'Аніме з такою назвою (titleUa / titleEn / titleJp) вже існує в базі.' },
+                    { status: 400 }
+                );
+            }
+        }
+        await prisma.animeGenreOnAnime.deleteMany({ where: { animeId } });
         if (Array.isArray(genreIds) && genreIds.length > 0) {
             await prisma.animeGenreOnAnime.createMany({
                 data: genreIds.map((genreId: number) => ({ animeId, genreId })),
             });
         }
-
         const anime = await prisma.anime.update({
             where: { id: animeId },
             data: {
-                titleUa: body.titleUa,
+                titleUa: toNullableString(body.titleUa),
                 titleEn: body.titleEn,
-                titleJp: body.titleJp,
-                description: body.description,
+                titleJp: toNullableString(body.titleJp),
+                description: toNullableString(body.description),
                 kind: body.kind,
                 episodes: body.episodes,
                 status: body.status,
                 dateRelease: body.dateRelease ? new Date(body.dateRelease) : undefined,
-                imageUrl: body.imageUrl,
-                rating: body.rating,
+                imageUrl: toNullableString(body.imageUrl),
+                rating: toNullableString(body.rating),
                 studioId: body.studioId,
             },
-            include: {
-                genres: { include: { genre: true } },
-            },
+            include: { genres: { include: { genre: true } } },
         });
 
         return NextResponse.json({ success: true, anime });

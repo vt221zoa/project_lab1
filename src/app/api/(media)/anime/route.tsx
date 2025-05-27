@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { buildUniqueOrConditions } from '@/utils/buildUniqueOrConditions';
+import { toNullableString } from "@/utils/emptyToNull";
+
 
 export async function GET() {
     try {
@@ -20,14 +23,24 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-
     const body = await request.json();
     const { genreIds = [] } = body;
 
     try {
-        function toNullableString(value: string): string | null {
-            return value.trim() === '' ? null : value;
+        const orConditions = buildUniqueOrConditions(body);
+
+        if (orConditions.length > 0) {
+            const duplicateAnime = await prisma.anime.findFirst({
+                where: { OR: orConditions }
+            });
+            if (duplicateAnime) {
+                return NextResponse.json(
+                    { error: 'Аніме з такою назвою (titleUa / titleEn / titleJp) вже існує в базі.' },
+                    { status: 400 }
+                );
+            }
         }
+
         const anime = await prisma.anime.create({
             data: {
                 titleUa: toNullableString(body.titleUa),

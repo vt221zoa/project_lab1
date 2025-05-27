@@ -79,7 +79,7 @@ export default function SettingsForm() {
                 Ваш аватар:
                 <br />
                 {imageUrl ? (
-                    <Image src={imageUrl} alt="Аватар" width={80} height={80} style={{ borderRadius: 15 }} />
+                    <Image src={imageUrl} alt="Аватар" width={80} height={80} />
                 ) : (
                     <span style={{
                         display: 'inline-block', width: 80, height: 80, background: "#000", borderRadius: 15

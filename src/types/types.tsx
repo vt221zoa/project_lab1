@@ -74,7 +74,6 @@ export type MangaCardType2 = {
     };
 }
 
-// Виведення профілю (ще не реалізовано)
 export type UserProfile = {
     id: string;
     name: string;

@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import {buildUniqueOrConditions} from "@/utils/buildUniqueOrConditions";
+import {toNullableString} from "@/utils/emptyToNull";
 
 export async function GET() {
     try {
@@ -24,18 +26,32 @@ export async function POST(request: Request) {
     const { genreIds = [] } = body;
 
     try {
+        const orConditions = buildUniqueOrConditions(body);
+
+        if (orConditions.length > 0) {
+            const duplicateManga = await prisma.manga.findFirst({
+                where: { OR: orConditions }
+            });
+            if (duplicateManga) {
+                return NextResponse.json(
+                    { error: 'Манга з такою назвою (titleUa / titleEn / titleJp) вже існує в базі.' },
+                    { status: 400 }
+                );
+            }
+        }
+
         const manga = await prisma.manga.create({
             data: {
-                titleUa: body.titleUa,
+                titleUa: toNullableString(body.titleUa),
                 titleEn: body.titleEn,
-                titleJp: body.titleJp,
-                description: body.description,
+                titleJp: toNullableString(body.titleJp),
+                description: toNullableString(body.description),
                 kind: body.kind,
                 chapters: body.chapters,
                 volumes: body.volumes,
                 status: body.status,
                 dateRelease: body.dateRelease ? new Date(body.dateRelease) : undefined,
-                imageUrl: body.imageUrl,
+                imageUrl: toNullableString(body.imageUrl),
                 publisherId: body.publisherId,
             },
         });

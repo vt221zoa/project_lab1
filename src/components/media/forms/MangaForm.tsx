@@ -95,10 +95,13 @@ export default function MangaForm({ initialData, publishers, genres, mangaId}: M
         }
     };
 
+    const [error, setError] = useState("");
+
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         let uploadedImageUrl = form.imageUrl;
 
@@ -117,8 +120,7 @@ export default function MangaForm({ initialData, publishers, genres, mangaId}: M
 
             if (!res.ok) {
                 const errorData = await res.json();
-                console.error("Cloudinary Error:", errorData);
-                alert("Не вдалося завантажити зображення на Cloudinary");
+                setError("Помилка при завантаженні зображення: " + (errorData.error?.message || "Unknown error"));
                 return;
             }
             const data = await res.json();
@@ -142,21 +144,27 @@ export default function MangaForm({ initialData, publishers, genres, mangaId}: M
             method = 'PATCH';
         }
 
-        await fetch(url, {
-            method,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(submitData),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Успішно!");
-                    router.push(`/manga/${mangaId || data.manga?.id}`);
-                } else {
-                    alert("Помилка");
-                }
-            })
-            .catch(() => alert("Сталася помилка"));
+        try {
+            const res = await fetch(url, {
+                method,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(submitData),
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                setError("");
+                alert("Успішно!");
+                router.push(`/manga/${mangaId || data.manga?.id}`);
+            } else {
+                setError(data?.message || data?.error || "Сталася невідома помилка");
+            }
+        } catch {
+            setError("Сталася помилка відправки. Спробуйте ще раз.");
+        }
     };
 
     return (
@@ -323,20 +331,26 @@ export default function MangaForm({ initialData, publishers, genres, mangaId}: M
             <div className="col-start-2 col-span-3">
                 <SectionInfo text="Опис" />
                 <textarea
-                    className="input rounded-[3px] w-full resize-y min-h-[120px] max-h-[500px]"
+                    className="input rounded-[3px] w-full resize-y min-h-[120px] max-h-[500px] w-[-10px]"
                     name="description"
                     placeholder="Опис"
                     value={form.description}
                     onChange={handleChange}
                 />
             </div>
-
-            <button
-                type="submit"
-                className="col-start-1 row-start-2"
-            >
-                {initialData ? "Оновити мангу" : "Створити мангу"}
-            </button>
+            <div className="col-start-1 row-start-2 flex flex-col" >
+                <button
+                    type="submit"
+                    className=""
+                >
+                    {initialData ? "Оновити мангу" : "Створити мангу"}
+                </button>
+                {error && (
+                    <div style={{ color: "red", gridColumn: "1 / -1", marginTop: 6 }}>
+                        {error}
+                    </div>
+                )}
+            </div>
         </form>
     );
 }

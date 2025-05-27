@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import {buildUniqueOrConditions} from "@/utils/buildUniqueOrConditions";
+import {toNullableString} from "@/utils/emptyToNull";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -70,6 +72,23 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const { genreIds = [] } = body;
 
     try {
+        const orConditions = buildUniqueOrConditions(body);
+
+        if (orConditions.length > 0) {
+            const duplicateManga = await prisma.manga.findFirst({
+                where: {
+                    OR: orConditions,
+                    NOT: { id: mangaId },
+                },
+            });
+            if (duplicateManga) {
+                return NextResponse.json(
+                    { error: 'Манга з такою назвою (titleUa / titleEn / titleJp) вже існує в базі.' },
+                    { status: 400 }
+                );
+            }
+        }
+
         await prisma.mangaGenreOnManga.deleteMany({ where: { mangaId } });
 
         if (Array.isArray(genreIds) && genreIds.length > 0) {
@@ -81,16 +100,16 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         const manga = await prisma.manga.update({
             where: { id: mangaId },
             data: {
-                titleUa: body.titleUa,
+                titleUa: toNullableString(body.titleUa),
                 titleEn: body.titleEn,
-                titleJp: body.titleJp,
-                description: body.description,
+                titleJp: toNullableString(body.titleJp),
+                description: toNullableString(body.description),
                 kind: body.kind,
                 chapters: body.chapters,
                 volumes: body.volumes,
                 status: body.status,
                 dateRelease: body.dateRelease ? new Date(body.dateRelease) : undefined,
-                imageUrl: body.imageUrl,
+                imageUrl: toNullableString(body.imageUrl),
                 publisherId: body.publisherId,
             },
             include: {

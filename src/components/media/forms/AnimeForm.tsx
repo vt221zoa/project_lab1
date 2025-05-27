@@ -337,7 +337,7 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                 </div>
             </div>
 
-            {/*Опис */}
+            {/* Опис */}
             <div className="col-start-2 col-span-3">
                 <SectionInfo text="Опис" />
                 <textarea
