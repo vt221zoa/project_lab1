@@ -17,9 +17,9 @@ export type AnimeFullType = {
         name?: string;
     };
     genres?: {
-        genre?: {
+        genre: {
             id: string;
-            name?: string;
+            name: string;
         };
     }[];
 }
@@ -56,6 +56,7 @@ export type AnimeCardType2 = {
     titleUa?: string | null;
     titleEn: string;
     kind: string;
+    status?: string;
     dateRelease?: string | null;
     imageUrl?: string | null;
     studio?: { name?: string };
@@ -67,6 +68,7 @@ export type MangaCardType2 = {
     titleUa?: string;
     titleEn: string;
     kind: string;
+    status?: string;
     dateRelease?: string;
     imageUrl?: string;
     publisher?: {

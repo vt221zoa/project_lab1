@@ -12,6 +12,7 @@ export async function getAllMangas(): Promise<MangaCardType2[]> {
         titleUa: a.titleUa ?? undefined,
         titleEn: a.titleEn,
         kind: a.kind,
+        status: a.status,
         dateRelease: a.dateRelease ? a.dateRelease.toISOString() : undefined,
         imageUrl: a.imageUrl ?? undefined,
         publisher: a.publisher ? { name: a.publisher.name ?? null } : undefined

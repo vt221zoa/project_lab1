@@ -12,6 +12,7 @@ export async function getAllAnimes(): Promise<AnimeCardType2[]> {
         titleUa: a.titleUa ?? undefined,
         titleEn: a.titleEn,
         kind: a.kind,
+        status: a.status,
         dateRelease: a.dateRelease ? a.dateRelease.toISOString() : undefined,
         imageUrl: a.imageUrl ?? undefined,
         studio: a.studio ? { name: a.studio.name ?? null } : undefined
