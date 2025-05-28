@@ -47,7 +47,7 @@ export async function getAnimeById(animeId: number): Promise<AnimeFullType | nul
         genres: a.genres?.map(g => ({
             genre: g.genre
                 ? {
-                    id: String(g.genre.id),
+                    id: Number(g.genre.id),
                     name: g.genre.name ?? null
                 }
                 : undefined

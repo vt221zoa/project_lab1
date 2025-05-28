@@ -30,6 +30,7 @@ jobs:
   lint:
     name: Run ESLint
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout repository
