@@ -53,6 +53,9 @@ const KIND_OPTIONS = [
     { value: 'ONA', label: 'ONA' },
 ];
 
+const CLOUDINARY_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || process.env.CLOUDINARY_UPLOAD_PRESET || '';
+const CLOUDINARY_CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || '';
+
 export default function AnimeForm({ initialData, studios, genres, animeId, onSubmit }: AnimeFormProps) {
     const [form, setForm] = useState({
         titleUa: initialData?.titleUa || "",
@@ -117,11 +120,11 @@ export default function AnimeForm({ initialData, studios, genres, animeId, onSub
         if (imageFile) {
             const formData = new FormData();
             formData.append('file', imageFile);
-            formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET || '');
+            formData.append('upload_preset', CLOUDINARY_PRESET);
 
             formData.append('folder', 'anime');
 
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,
                 {
                     method: 'POST',
                     body: formData

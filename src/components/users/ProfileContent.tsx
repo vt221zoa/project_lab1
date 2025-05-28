@@ -38,18 +38,13 @@ export default function ProfileContent() {
                         height={70}
                     />
                 ) : (
-                    <span className="inline-block w-[70px] h-[70px]" />
+                    <span className="inline-block w-[70px] h-[70px] bg-[black] rounded-[10px]" />
                 )}
                 <div className="flex flex-col gap-[2px]">
                     <div className="font-semibold">Нікнейм: <span className="font-normal">{user.name}</span></div>
                     <div className="font-semibold">Email: <span className="font-normal">{user.email}</span></div>
                     <Link href="/profile/settings">
-                        <button
-                            className="mt-[2px] px-[4px]"
-                            type="button"
-                        >
                             Налаштування профілю
-                        </button>
                     </Link>
                 </div>
             </div>

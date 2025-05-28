@@ -36,7 +36,7 @@ export default function MediaAddForm({
                                      }: Props) {
     const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
 
-    const [status, setStatus] = useState<string>('watching');
+    const [status, setStatus] = useState<string>('Дивлюся');
     const [rating, setRating] = useState<number>(0);
     const [progress, setProgress] = useState<number>(0);
     const [volumes, setVolumes] = useState<number>(0);
@@ -86,13 +86,13 @@ export default function MediaAddForm({
                 setIsInList(true);
                 if (type === 'anime') {
                     const entry = data as UserAnime;
-                    setStatus(entry.status ?? 'watching');
+                    setStatus(entry.status ?? 'Дивлюся');
                     setRating(entry.score ?? 0);
                     setProgress(entry.episodesWatched ?? 0);
                     setComment(entry.comment ?? '');
                 } else {
                     const entry = data as UserManga;
-                    setStatus(entry.status ?? 'watching');
+                    setStatus(entry.status ?? 'Читаю');
                     setRating(entry.score ?? 0);
                     setChapters(entry.chaptersRead ?? 0);
                     setVolumes(entry.volumesRead ?? 0);
@@ -174,10 +174,13 @@ export default function MediaAddForm({
                 setResult('Помилка видалення!');
                 return;
             }
+
             setResult('Видалено із мого списку');
             setIsInList(false);
+            if (type === 'anime') {
+                setStatus('Дивлюся');
+            } else setStatus('Читаю');
 
-            setStatus('watching');
             setRating(0);
             setProgress(0);
             setVolumes(0);
@@ -213,7 +216,7 @@ export default function MediaAddForm({
                     onChange={(e) => setStatus(e.target.value)}
                 >
                     <option value="Дивлюся">Дивлюся</option>
-                    <option value="Вже дивився">Вже дивився</option>
+                    <option value="Переглянуто">Переглянуто</option>
                     <option value="Заплановано">Заплановано</option>
                     <option value="Брошено">Брошено</option>
                     <option value="Відкладено">Відкладено</option>
@@ -226,7 +229,7 @@ export default function MediaAddForm({
                         onChange={(e) => setStatus(e.target.value)}
                     >
                         <option value="Читаю">Читаю</option>
-                        <option value="Читав">Читав</option>
+                        <option value="Прочитав">Прочитав</option>
                         <option value="Планую читати">Планую читати</option>
                         <option value="Брошено">Брошено</option>
                         <option value="Відкладено">Відкладено</option>

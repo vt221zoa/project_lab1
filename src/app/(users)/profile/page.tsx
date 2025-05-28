@@ -1,10 +1,13 @@
 import ProfileContent from "@/components/users/ProfileContent";
+import ProfileMediaList from "@/components/users/(media_List)/ProfileMediaList";
+import SectionInfo from "@/components/SectionInfo";
 
 export default function ProfilePage() {
     return (
         <div>
-            <h1>Профіль</h1>
+            <SectionInfo text='Профіль' color='#03ff1e'/>
             <ProfileContent />
+            <ProfileMediaList />
         </div>
     );
 }

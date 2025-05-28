@@ -27,9 +27,9 @@ const Header = () => {
                 {!loading && user && (
                     <Link href='/profile' className="flex items-center gap-[10px] no-underline text-[#ffffff]">
                         {user.imageUrl ? (
-                            <Image src={user.imageUrl} alt={user.name} width={30} height={30} className="rounded" />
+                            <Image src={user.imageUrl} alt={user.name} width={30} height={30} className="rounded-[10px]" />
                         ) : (
-                            <span className="w-[30px] h-[30px] bg-[#000000] inline-block rounded" />
+                            <span className="w-[30px] h-[30px] bg-[#000000] inline-block rounded-[10px]" />
                         )}
                         <span>{user.name}</span>
                     </Link>

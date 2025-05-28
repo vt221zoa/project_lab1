@@ -77,14 +77,14 @@ export default function SettingsForm() {
         >
             <label className="text-[18px] flex flex-col gap-[8px]">
                 Ваш аватар:
-                <div className="mb-[6px]">
+                <div className="mb-[6px] cursor-pointer">
                     {imageUrl ? (
                         <Image
                             src={imageUrl}
                             alt="Аватар"
-                            width={80}
-                            height={80}
-                            className="object-cover"
+                            width={120}
+                            height={120}
+                            className="object-cover rounded-[10px]"
                         />
                     ) : (
                         <span className="inline-block bg-[black] w-[80px] h-[80px]" />
@@ -110,7 +110,7 @@ export default function SettingsForm() {
             </label>
             <button
                 type="submit"
-                className=" py-[10px] text-[16px] "
+                className=" py-[10px] text-[16px] cursor-pointer"
             >
                 Зберегти
             </button>
