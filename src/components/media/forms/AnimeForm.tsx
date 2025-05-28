@@ -117,11 +117,11 @@ export default function AnimeForm({ initialData, studios, genres, animeId, onSub
         if (imageFile) {
             const formData = new FormData();
             formData.append('file', imageFile);
-            formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '');
+            formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET || '');
 
             formData.append('folder', 'anime');
 
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
                 {
                     method: 'POST',
                     body: formData

@@ -8,6 +8,7 @@ import { buildCloudinaryUrl } from '@/utils/cloudinary';
 import React from "react";
 import EditDeleteControls from "@/components/EditDeleteControls";
 import {useRouter} from "next/navigation";
+import MediaAddForm from "@/components/users/(media_List)/MediaAddForm";
 
 const FALLBACK_IMAGE = '/static/not-found.png';
 
@@ -59,6 +60,14 @@ export default function MediaDetails({ type, data }: Props) {
                         className="rounded-md object-cover"
                     />
                 </div>
+
+                <MediaAddForm
+                    type={type}
+                    mediaId={data.id}
+                    totalEpisodes={isAnime(data) ? data.episodes : null}
+                    totalVolumes={!isAnime(data) ? data.volumes : null}
+                    totalChapters={!isAnime(data) ? data.chapters : null}
+                />
 
                 {/* Інформація */}
                 <div>

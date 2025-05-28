@@ -56,6 +56,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     const animeId = Number(id);
 
     try {
+        await prisma.userAnimeList.deleteMany({ where: { animeId } });
         await prisma.animeGenreOnAnime.deleteMany({ where: { animeId } });
         await prisma.anime.delete({ where: { id: animeId } });
 

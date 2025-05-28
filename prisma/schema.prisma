@@ -1,7 +1,7 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"]
   output        = "../src/generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -12,89 +12,84 @@ datasource db {
 /// Користувачі
 model User {
   /// Ідентифікатор користувача
-  id String @id @default(cuid())
-
+  id        String   @id @default(cuid())
   /// Унікальна почта користувача
-  email    String @unique
+  email     String   @unique
   /// Пароль користувача
-  password String
+  password  String
   /// Ім'я користувача
-  name     String @unique
-
+  name      String   @unique
   /// Ззображення користувача
   imageUrl  String?
   /// Чи є адміном користувач?
-  isAdmin   Boolean  @default(false) // В подальшому розвитку сайту треба буде додати ролі для них
+  isAdmin   Boolean  @default(false)
   /// Коли створений користувач?
   createdAt DateTime @default(now())
+
+  UserMangaList UserMangaList[]
+  UserAnimeList UserAnimeList[]
 }
 
 /// Аніме
 model Anime {
   /// Ідентифікатор аніме
-  id Int @id @default(autoincrement())
-
+  id            Int                 @id @default(autoincrement())
   /// Назва аніме українською
-  titleUa String? @unique
+  titleUa       String?             @unique
   /// Назва аніме англійською
-  titleEn String  @unique
+  titleEn       String              @unique
   /// Назва аніме японською
-  titleJp String? @unique
-
+  titleJp       String?             @unique
   /// Опис аніме
-  description String?
+  description   String?
   /// Віковий рейтинг аніме
-  rating      String?
+  rating        String?
   /// Тип аніме (TV-серіал, Фільм і тощо)
-  kind        String
+  kind          String
   /// Кількість випущених серій в епізоді
-  episodes    Int?
+  episodes      Int?
   /// Статус аніме (онгоїнг, вийшло, ще випускається)
-  status      String
+  status        String
   /// Коли створене аніме
-  dateRelease DateTime?
-
+  dateRelease   DateTime?
   /// Зображення аніме в URL
-  imageUrl String?
+  imageUrl      String?
   /// Студія яка виробляла це аніме
-  studioId Int?
-  studio   Studio?             @relation(fields: [studioId], references: [id])
-  /// Жанри аніме
-  genres   AnimeGenreOnAnime[]
+  studioId      Int?
+  studio        Studio?             @relation(fields: [studioId], references: [id])
+  genres        AnimeGenreOnAnime[]
+  UserAnimeList UserAnimeList[]
 }
 
 /// Манга
 model Manga {
   /// Ідентифікатор манги
-  id Int @id @default(autoincrement())
-
+  id            Int                 @id @default(autoincrement())
   /// Назва манги українською
-  titleUa String? @unique
+  titleUa       String?             @unique
   /// Назва манги англійскьою
-  titleEn String  @unique
+  titleEn       String              @unique
   /// Назва манги японською
-  titleJp String? @unique
-
+  titleJp       String?             @unique
   /// Опис манги
-  description String?
+  description   String?
   /// Тип манги (Манга, Манхва і тощо)
-  kind        String
+  kind          String
   /// Кількість розділів в творі
-  chapters    Int?
+  chapters      Int?
   /// Кількість томів в творі
-  volumes     Int?
+  volumes       Int?
   /// Дата релізу манги
-  dateRelease DateTime?
+  dateRelease   DateTime?
   /// Статус манги (Видається, Видано і тощо)
-  status      String
-
+  status        String
   /// Зображення манги
-  imageUrl    String?
+  imageUrl      String?
   /// Видавництва які випускають мангу
-  publisherId Int?
-  publisher   Publisher?          @relation(fields: [publisherId], references: [id])
-  /// Жанри
-  genres      MangaGenreOnManga[]
+  publisherId   Int?
+  publisher     Publisher?          @relation(fields: [publisherId], references: [id])
+  genres        MangaGenreOnManga[]
+  UserMangaList UserMangaList[]
 }
 
 /// Жанри аніме
@@ -103,7 +98,6 @@ model Genre {
   /// Назва жанру
   name   String              @unique
   nameEn String?             @unique
-  /// Зв'язок жанру і аніме
   animes AnimeGenreOnAnime[]
   mangas MangaGenreOnManga[]
 }
@@ -111,8 +105,8 @@ model Genre {
 /// Зв'язки аніме та жанрів
 model AnimeGenreOnAnime {
   animeId Int
-  anime   Anime @relation(fields: [animeId], references: [id])
   genreId Int
+  anime   Anime @relation(fields: [animeId], references: [id])
   genre   Genre @relation(fields: [genreId], references: [id])
 
   @@id([animeId, genreId])
@@ -121,9 +115,9 @@ model AnimeGenreOnAnime {
 /// Зв'язки манги та жанрів
 model MangaGenreOnManga {
   mangaId Int
-  manga   Manga @relation(fields: [mangaId], references: [id])
   genreId Int
   genre   Genre @relation(fields: [genreId], references: [id])
+  manga   Manga @relation(fields: [mangaId], references: [id])
 
   @@id([mangaId, genreId])
 }
@@ -136,7 +130,6 @@ model Studio {
   name    String  @unique
   /// Зображення студії
   logoUrl String?
-  /// Студії які виробляли аніме
   animes  Anime[]
 }
 
@@ -146,6 +139,42 @@ model Publisher {
   id     Int     @id @default(autoincrement())
   /// Назва видавництва
   name   String  @unique
-  /// Видавництва які видають манги
   mangas Manga[]
+}
+
+model UserAnimeList {
+  userId  String
+  animeId Int
+  user    User   @relation(fields: [userId], references: [id])
+  anime   Anime  @relation(fields: [animeId], references: [id])
+
+  /// Статус перегляду
+  status          String
+  /// Коментар
+  comment         String?
+  /// Оцінка (1-10)
+  score           Int?
+  /// Кількість переглянутих епізодів
+  episodesWatched Int     @default(0)
+
+  @@id([userId, animeId])
+}
+
+model UserMangaList {
+  userId  String
+  mangaId Int
+  user    User   @relation(fields: [userId], references: [id])
+  manga   Manga  @relation(fields: [mangaId], references: [id])
+
+  /// Статус читання
+  status       String
+  /// Коментар
+  comment      String?
+  /// Оцінка
+  score        Int?
+  /// Кількість прочитаних розділів
+  chaptersRead Int     @default(0)
+  volumesRead  Int     @default(0)
+
+  @@id([userId, mangaId])
 }

@@ -96,3 +96,22 @@ export interface JwtPayload {
     email: string;
     isAdmin: boolean;
 }
+
+export type UserAnimeListItem = {
+    userId: string;
+    animeId: number;
+    status: string;
+    comment?: string | null;
+    score?: number | null;
+    episodesWatched: number;
+};
+
+export type UserMangaListItem = {
+    userId: string;
+    mangaId: number;
+    status: string;
+    comment?: string | null;
+    score?: number | null;
+    chaptersRead: number;
+    volumesRead: number;
+};

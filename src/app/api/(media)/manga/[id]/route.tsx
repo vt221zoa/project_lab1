@@ -55,6 +55,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     const mangaId = Number(id);
 
     try {
+        await prisma.userMangaList.deleteMany({ where: { mangaId } });
         await prisma.mangaGenreOnManga.deleteMany({ where: { mangaId } });
         await prisma.manga.delete({ where: { id: mangaId } });
 

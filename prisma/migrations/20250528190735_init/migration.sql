@@ -89,6 +89,31 @@ CREATE TABLE "Publisher" (
     CONSTRAINT "Publisher_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "UserAnimeList" (
+    "userId" TEXT NOT NULL,
+    "animeId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL,
+    "comment" TEXT,
+    "score" INTEGER,
+    "episodesWatched" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "UserAnimeList_pkey" PRIMARY KEY ("userId","animeId")
+);
+
+-- CreateTable
+CREATE TABLE "UserMangaList" (
+    "userId" TEXT NOT NULL,
+    "mangaId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL,
+    "comment" TEXT,
+    "score" INTEGER,
+    "chaptersRead" INTEGER NOT NULL DEFAULT 0,
+    "volumesRead" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "UserMangaList_pkey" PRIMARY KEY ("userId","mangaId")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -138,7 +163,19 @@ ALTER TABLE "AnimeGenreOnAnime" ADD CONSTRAINT "AnimeGenreOnAnime_animeId_fkey" 
 ALTER TABLE "AnimeGenreOnAnime" ADD CONSTRAINT "AnimeGenreOnAnime_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES "Genre"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "MangaGenreOnManga" ADD CONSTRAINT "MangaGenreOnManga_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES "Genre"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "MangaGenreOnManga" ADD CONSTRAINT "MangaGenreOnManga_mangaId_fkey" FOREIGN KEY ("mangaId") REFERENCES "Manga"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "MangaGenreOnManga" ADD CONSTRAINT "MangaGenreOnManga_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES "Genre"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserAnimeList" ADD CONSTRAINT "UserAnimeList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserAnimeList" ADD CONSTRAINT "UserAnimeList_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "Anime"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserMangaList" ADD CONSTRAINT "UserMangaList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserMangaList" ADD CONSTRAINT "UserMangaList_mangaId_fkey" FOREIGN KEY ("mangaId") REFERENCES "Manga"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
