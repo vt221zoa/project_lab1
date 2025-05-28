@@ -65,8 +65,9 @@ export default function AnimeCatalog({ allAnime }: { allAnime: AnimeCardType2[] 
             {/* Панель фільтрів */}
             <div className="flex gap-[8px] my-[8px] items-end">
                 <div>
-                    <label className="block">Тип аніме:</label>
+                    <label className="block" htmlFor='sortKind'>Тип аніме:</label>
                     <select
+                        id='sortKind'
                         value={filters.kind}
                         onChange={e => setFilters(f => ({ ...f, kind: e.target.value as AnimeKind }))}
                         className="border"
@@ -78,8 +79,9 @@ export default function AnimeCatalog({ allAnime }: { allAnime: AnimeCardType2[] 
                     </select>
                 </div>
                 <div>
-                    <label className="block">Сортувати за:</label>
+                    <label className="block" htmlFor='sortBy'>Сортувати за:</label>
                     <select
+                        id='sortBy'
                         value={filters.sortBy}
                         onChange={e => setFilters(f => ({ ...f, sortBy: e.target.value as SortKey }))}
                         className="border"
@@ -90,8 +92,9 @@ export default function AnimeCatalog({ allAnime }: { allAnime: AnimeCardType2[] 
                     </select>
                 </div>
                 <div>
-                    <label className="block">Статус:</label>
+                    <label className="block" htmlFor='sortStatus'>Статус:</label>
                     <select
+                        id='sortStatus'
                         value={filters.status}
                         onChange={e =>
                             setFilters(f => ({
@@ -113,8 +116,9 @@ export default function AnimeCatalog({ allAnime }: { allAnime: AnimeCardType2[] 
                     </select>
                 </div>
                 <div>
-                    <label className="block">Порядок:</label>
+                    <label className="block" htmlFor='sortOrder'>Порядок:</label>
                     <select
+                        id='sortOrder'
                         value={filters.sortOrder}
                         onChange={e => setFilters(f => ({ ...f, sortOrder: e.target.value as SortOrder }))}
                         className="border"

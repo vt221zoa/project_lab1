@@ -53,7 +53,7 @@ const KIND_OPTIONS = [
     { value: 'ONA', label: 'ONA' },
 ];
 
-export default function AnimeForm({ initialData, studios, genres, animeId  }: AnimeFormProps) {
+export default function AnimeForm({ initialData, studios, genres, animeId, onSubmit }: AnimeFormProps) {
     const [form, setForm] = useState({
         titleUa: initialData?.titleUa || "",
         titleEn: initialData?.titleEn || "",
@@ -144,6 +144,10 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
             imageUrl: uploadedImageUrl,
         };
 
+        if (onSubmit) {
+            onSubmit(submitData);
+        }
+
         let url = '/api/anime';
         let method = 'POST';
 
@@ -202,8 +206,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                 <SectionInfo text="Інформація" />
                 <div className="flex flex-col gap-[6px] media-form">
                     <div>
-                        <label>Українська назва: </label>
+                        <label htmlFor="titleUa">Українська назва: </label>
                         <input
+                            id="titleUa"
                             className="input"
                             type="text"
                             name="titleUa"
@@ -213,8 +218,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         />
                     </div>
                     <div>
-                        <label>Англійська назва: </label>
+                        <label htmlFor="titleEn">Англійська назва: </label>
                         <input
+                            id="titleEn"
                             className="input"
                             type="text"
                             name="titleEn"
@@ -225,8 +231,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         />
                     </div>
                     <div>
-                        <label>Японська назва: </label>
+                        <label htmlFor="titleJp">Японська назва: </label>
                         <input
+                            id="titleJp"
                             className="input"
                             type="text"
                             name="titleJp"
@@ -236,8 +243,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         />
                     </div>
                     <div>
-                        <label>Тип: </label>
+                        <label htmlFor="kind">Тип: </label>
                         <select
+                            id="kind"
                             className="input"
                             name="kind"
                             value={form.kind}
@@ -251,8 +259,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         </select>
                     </div>
                     <div>
-                        <label>Кількість епізодів: </label>
+                        <label htmlFor="episodes">Кількість епізодів: </label>
                         <input
+                            id="episodes"
                             className="input"
                             type="number"
                             name="episodes"
@@ -262,8 +271,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         />
                     </div>
                     <div>
-                        <label>Статус: </label>
+                        <label htmlFor="status">Статус: </label>
                         <select
+                            id="status"
                             className="input"
                             name="status"
                             value={form.status}
@@ -277,8 +287,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         </select>
                     </div>
                     <div>
-                        <label>Дата релізу: </label>
+                        <label htmlFor="dateRelease">Дата релізу: </label>
                         <input
+                            id="dateRelease"
                             className="input"
                             type="date"
                             name="dateRelease"
@@ -287,8 +298,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         />
                     </div>
                     <div>
-                        <label>Віковий рейтинг: </label>
+                        <label htmlFor="rating">Віковий рейтинг: </label>
                         <select
+                            id="rating"
                             className="input"
                             name="rating"
                             value={form.rating}
@@ -301,7 +313,7 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                         </select>
                     </div>
                     <div>
-                        <label>Жанри:</label>
+                        <label htmlFor="genre">Жанри:</label>
                         <div className="max-h-[120px] overflow-y-auto custom-scroll bg-[#ffffff] border rounded-[3px]">
                             {genres.map((g) => (
                                 <label key={g.id} className="block">
@@ -323,7 +335,9 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
             <div className="media-form">
                 <SectionInfo text="Студія" />
                 <div>
+                    <label htmlFor="studioId" style={{display: "none"}}>Студія</label>
                     <select
+                        id="studioId"
                         name="studioId"
                         value={form.studioId}
                         onChange={handleChange}
@@ -336,7 +350,6 @@ export default function AnimeForm({ initialData, studios, genres, animeId  }: An
                     </select>
                 </div>
             </div>
-
             {/* Опис */}
             <div className="col-start-2 col-span-3">
                 <SectionInfo text="Опис" />

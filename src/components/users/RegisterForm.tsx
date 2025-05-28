@@ -34,22 +34,24 @@ export default function RegisterForm() {
             onSubmit={handleSubmit}
             className="mt-[12px] flex flex-col gap-[4px] p-[8px] items-center"
         >
-            <h2 className="font-bold text-center mb-4">Реєстрація</h2>
+            <h2 className="text-center mb-[4px]">Реєстрація</h2>
             <input
+                type="name"
                 name="name"
                 placeholder="Ім'я"
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="p-[3px] border border-gray-300"
+                className="p-[3px] border"
             />
             <input
+                type="email"
                 name="email"
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="p-[3px] border border-gray-300"
+                className="p-[3px] border"
             />
             <input
                 type="password"
@@ -58,11 +60,11 @@ export default function RegisterForm() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="py-[3px] border border-gray-300"
+                className="py-[3px] border"
             />
             <button
                 type="submit"
-                className="mt-[4px] px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition"
+                className="mt-[4px] px-[4px] py-[2px] rounded-[3px]"
             >
                 Зареєструватися
             </button>
@@ -70,7 +72,7 @@ export default function RegisterForm() {
                 <p className="text-[red] text-center p-[2px]">{error}</p>
             )}
             <div className="text-center mt-[2px]">
-                <Link href='/auth/login' className="text-blue-600 hover:underline">
+                <Link href='/auth/login'>
                     Вже є акаунт?
                 </Link>
             </div>

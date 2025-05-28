@@ -1,14 +1,24 @@
 module.exports = {
     preset: 'ts-jest',
-    testEnvironment: 'jsdom',
-    setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
+    testEnvironment: 'jest-environment-jsdom',
+    testEnvironmentOptions: {
+        customExportConditions: ['node', 'require', 'default'],
+    },
     testMatch: ['<rootDir>/__tests__/**/*.test.tsx'],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
     transform: {
-        '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+        '^.+\\.(ts|tsx|js|jsx|mjs)$': ['@swc/jest', {
+            jsc: {
+                transform: {
+                    react: { runtime: 'automatic' },
+                },
+            },
+        }],
     },
+    testPathIgnorePatterns: ['/node_modules/', '/.next/'],
+    setupFilesAfterEnv: ['<rootDir>/setupTestsComponents.tsx'],
     collectCoverage: true,
     coverageThreshold: {
         global: {
