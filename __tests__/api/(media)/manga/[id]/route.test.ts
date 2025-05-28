@@ -43,8 +43,30 @@ describe('/api/manga/[id] DELETE', () => {
         expect(data.success).toBe(true);
     });
 
-    it('повертає 500 при помилці при видаленні', async () => {
+    it('повертає 500 при помилці при видаленні жанрів', async () => {
+        (prisma.userMangaList.deleteMany as jest.Mock).mockResolvedValue(undefined);
         (prisma.mangaGenreOnManga.deleteMany as jest.Mock).mockRejectedValue(new Error('err'));
+        const params = Promise.resolve({ id: '77' });
+        const response = await DELETE({} as Request, { params });
+        expect(response.status).toBe(500);
+        const data = await response.json();
+        expect(data.error).toMatch(/не вдалося видалити/i);
+    });
+
+    it('повертає 500 при помилці при видаленні userMangaList', async () => {
+        (prisma.userMangaList.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.mangaGenreOnManga.deleteMany as jest.Mock).mockRejectedValue(new Error('err'));
+        const params = Promise.resolve({ id: '77' });
+        const response = await DELETE({} as Request, { params });
+        expect(response.status).toBe(500);
+        const data = await response.json();
+        expect(data.error).toMatch(/не вдалося видалити/i);
+    });
+
+    it('повертає 500 при помилці при видаленні манги', async () => {
+        (prisma.mangaGenreOnManga.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.userMangaList.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.manga.delete as jest.Mock).mockRejectedValue(new Error('mangaErr'));
         const params = Promise.resolve({ id: '77' });
         const response = await DELETE({} as Request, { params });
         expect(response.status).toBe(500);

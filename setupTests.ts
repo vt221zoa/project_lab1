@@ -24,6 +24,12 @@ jest.mock('@/lib/prisma', () => ({
             deleteMany: jest.fn(),
             createMany: jest.fn(),
         },
+        userAnimeList: {
+            deleteMany: jest.fn(),
+        },
+        userMangaList: {
+            deleteMany: jest.fn(),
+        },
         studio: {
             findMany: jest.fn(),
         },

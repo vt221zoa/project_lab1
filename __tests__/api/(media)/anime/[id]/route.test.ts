@@ -43,6 +43,7 @@ describe('/api/anime/[id] GET', () => {
 
 describe('/api/anime/[id] DELETE', () => {
     it('успішно видаляє аніме (200)', async () => {
+        (prisma.userAnimeList.deleteMany as jest.Mock).mockResolvedValue(undefined);
         (prisma.animeGenreOnAnime.deleteMany as jest.Mock).mockResolvedValue(undefined);
         (prisma.anime.delete as jest.Mock).mockResolvedValue(undefined);
 
@@ -53,8 +54,30 @@ describe('/api/anime/[id] DELETE', () => {
         expect(data.success).toBe(true);
     });
 
-    it('повертає 500 при помилці при видаленні', async () => {
+    it('повертає 500 при помилці при видаленні жанрів', async () => {
+        (prisma.userAnimeList.deleteMany as jest.Mock).mockResolvedValue(undefined);
         (prisma.animeGenreOnAnime.deleteMany as jest.Mock).mockRejectedValue(new Error('err'));
+        const params = Promise.resolve({ id: '77' });
+        const response = await DELETE({} as Request, { params });
+        expect(response.status).toBe(500);
+        const data = await response.json();
+        expect(data.error).toMatch(/не вдалося видалити/i);
+    });
+
+    it('повертає 500 при помилці при видаленні userAnimeList', async () => {
+        (prisma.animeGenreOnAnime.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.userAnimeList.deleteMany as jest.Mock).mockRejectedValue(new Error('userListErr'));
+        const params = Promise.resolve({ id: '77' });
+        const response = await DELETE({} as Request, { params });
+        expect(response.status).toBe(500);
+        const data = await response.json();
+        expect(data.error).toMatch(/не вдалося видалити/i);
+    });
+
+    it('повертає 500 при помилці при видаленні аніме', async () => {
+        (prisma.userAnimeList.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.animeGenreOnAnime.deleteMany as jest.Mock).mockResolvedValue(undefined);
+        (prisma.anime.delete as jest.Mock).mockRejectedValue(new Error('animeErr'));
         const params = Promise.resolve({ id: '77' });
         const response = await DELETE({} as Request, { params });
         expect(response.status).toBe(500);
