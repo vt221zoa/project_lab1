@@ -22,4 +22,4 @@ jobs:
       - name: Run test api with coverage
         run: npm run test-a
       - name: Run test component with coverage
-        uses: npm run test-c
+        run: npm run test-c
