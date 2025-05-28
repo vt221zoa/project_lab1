@@ -18,7 +18,7 @@ export type AnimeFullType = {
     };
     genres?: {
         genre: {
-            id: string;
+            id: number;
             name: string;
         };
     }[];
