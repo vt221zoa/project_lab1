@@ -6,6 +6,7 @@ module.exports = {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
+    clearMocks: true,
     collectCoverage: true,
     coverageThreshold: {
         global: {

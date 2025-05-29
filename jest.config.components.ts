@@ -19,7 +19,9 @@ module.exports = {
     },
     testPathIgnorePatterns: ['/node_modules/', '/.next/'],
     setupFilesAfterEnv: ['<rootDir>/setupTestsComponents.tsx'],
+    clearMocks: true,
     collectCoverage: true,
+    coverageProvider: "v8",
     coverageThreshold: {
         global: {
             branches: 40,
