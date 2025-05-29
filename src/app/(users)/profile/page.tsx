@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ProfileContent from "@/components/users/ProfileContent";
 import ProfileMediaList from "@/components/users/(media_List)/ProfileMediaList";
 import SectionInfo from "@/components/SectionInfo";

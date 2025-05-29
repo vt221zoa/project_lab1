@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getAllMangas } from "@/lib/data/manga";
 import MangaCatalog from "@/components/media/MangaCatalog";
 

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getAllAnimes } from "@/lib/data/anime";
 import AnimeCatalog from "@/components/media/AnimeCatalog";
 

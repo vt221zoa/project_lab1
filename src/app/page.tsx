@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import SectionTitle from "@/components/SectionTitle";
 import {MediaCard} from "@/components/media/MediaCard";
 import { getOngoingAnimes } from "@/lib/data/anime";
