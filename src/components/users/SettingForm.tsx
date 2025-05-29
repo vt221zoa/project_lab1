@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { UserProfile } from "@/types/types";
 
-const CLOUDINARY_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || process.env.CLOUDINARY_UPLOAD_PRESET || '';
-const CLOUDINARY_CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || '';
+const CLOUDINARY_PRESET = 'AniMan';
+const CLOUDINARY_CLOUD = 'dbhwwtyd1';
 
 export default function SettingsForm() {
     const [user, setUser] = useState<UserProfile | null>(null);

@@ -208,9 +208,10 @@ export default function MediaAddForm({
         >
 
             <div>
-                <label className="block">Статус</label>
+                <label className="block" htmlFor="status">Статус</label>
                 {type === 'anime' && (
                 <select
+                    id='status'
                     className="w-full border px-[2px] py-[1px]"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
@@ -237,8 +238,9 @@ export default function MediaAddForm({
                 )}
             </div>
             <div>
-                <label className="block">Оцінка (0–10)</label>
+                <label className="block" htmlFor='rating'>Оцінка (0–10)</label>
                 <input
+                    id='rating'
                     type="number"
                     className="w-full border px-[2px] py-[1px]"
                     min={0}
@@ -249,10 +251,11 @@ export default function MediaAddForm({
             </div>
             {type === 'anime' && (
                 <div>
-                    <label className="block">
+                    <label className="block" htmlFor='progress'>
                         Переглянуто епізодів {totalEpisodes ? ` з ${totalEpisodes}` : ''}
                     </label>
                     <input
+                        id='progress'
                         type="number"
                         className="w-full border px-[2px] py-[1px]"
                         min={0}
@@ -293,8 +296,9 @@ export default function MediaAddForm({
                 </>
             )}
             <div>
-                <label className="block">Коментар</label>
+                <label className="block" htmlFor='comment'>Коментар</label>
                 <textarea
+                    id='comment'
                     className="w-full border px-[1px] py-[1px] resize-y"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
