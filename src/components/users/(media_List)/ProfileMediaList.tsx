@@ -3,48 +3,7 @@ import { useEffect, useState } from 'react';
 import ProfileAnimeTable from "@/components/users/(media_List)/ProfileAnimeTable";
 import ProfileMangaTable from "@/components/users/(media_List)/ProfileMangaTable";
 import SectionInfo from "@/components/SectionInfo";
-
-type AnimeEntry = {
-    animeId: number;
-    status: string;
-    score: number | null;
-    episodesWatched: number;
-    anime: {
-        id: number;
-        titleUa?: string | null;
-        titleEn: string;
-        imageUrl?: string | null;
-        episodes?: number | null;
-    };
-};
-
-type MangaEntry = {
-    mangaId: number;
-    status: string;
-    score: number | null;
-    chaptersRead: number;
-    volumesRead: number;
-    manga: {
-        id: number;
-        titleUa?: string | null;
-        titleEn: string;
-        imageUrl?: string | null;
-        chapters?: number | null;
-        volumes?: number | null;
-    };
-};
-
-type Stats = {
-    totalAnime: number;
-    completedAnime: number;
-    watchingAnime: number;
-    totalEpisodes: number;
-
-    totalManga: number;
-    completedManga: number;
-    readingManga: number;
-    totalChapters: number;
-};
+import {AnimeEntry, MangaEntry, Stats} from "@/types/types";
 
 export default function ProfileMediaList() {
     const [animeList, setAnimeList] = useState<AnimeEntry[]>([]);

@@ -97,21 +97,46 @@ export interface JwtPayload {
     isAdmin: boolean;
 }
 
-export type UserAnimeListItem = {
-    userId: string;
+export type AnimeEntry = {
     animeId: number;
     status: string;
-    comment?: string | null;
-    score?: number | null;
+    score: number | null;
     episodesWatched: number;
+    comment?: string | null;
+    anime: {
+        id: number;
+        titleUa?: string | null;
+        titleEn: string;
+        imageUrl?: string | null;
+        episodes?: number | null;
+    };
 };
 
-export type UserMangaListItem = {
-    userId: string;
+export type MangaEntry = {
     mangaId: number;
     status: string;
-    comment?: string | null;
-    score?: number | null;
+    score: number | null;
     chaptersRead: number;
     volumesRead: number;
+    comment?: string | null;
+    manga: {
+        id: number;
+        titleUa?: string | null;
+        titleEn: string;
+        imageUrl?: string | null;
+        chapters?: number | null;
+        volumes?: number | null;
+    };
+};
+
+export type Stats = {
+    totalAnime: number;
+    completedAnime: number;
+    watchingAnime: number;
+    totalEpisodes: number;
+
+    totalManga: number;
+    completedManga: number;
+    readingManga: number;
+    totalChapters: number;
 };

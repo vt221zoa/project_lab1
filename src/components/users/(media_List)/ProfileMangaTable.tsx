@@ -1,21 +1,6 @@
 import Link from "next/link";
 import React from "react";
-
-type MangaEntry = {
-    mangaId: number;
-    status: string;
-    score: number | null;
-    chaptersRead: number;
-    volumesRead: number;
-    comment?: string | null;
-    manga: {
-        id: number;
-        titleUa?: string | null;
-        titleEn: string;
-        chapters?: number | null;
-        volumes?: number | null;
-    };
-};
+import {MangaEntry} from "@/types/types";
 
 type Props = {
     mangaList: MangaEntry[];
@@ -27,22 +12,22 @@ export default function ProfileMangaTable({ mangaList }: Props) {
     }
     return (
         <table className="min-w-full border my-[6px] bg-[white] shadow">
-            <thead className="bg-gray-100">
+            <thead>
             <tr>
-                <th className="p-[2px] ">#</th>
-                <th className="p-[2px]  text-left">Назва манги</th>
-                <th className="p-[2px] ">Статус</th>
-                <th className="p-[2px] ">Оцінка</th>
-                <th className="p-[2px] ">Гл.</th>
-                <th className="p-[2px] ">Томів</th>
+                <th className="p-[2px]">#</th>
+                <th className="p-[2px] text-left">Назва манги</th>
+                <th className="p-[2px]">Статус</th>
+                <th className="p-[2px]">Оцінка</th>
+                <th className="p-[2px]">Гл.</th>
+                <th className="p-[2px]">Томів</th>
             </tr>
             </thead>
             <tbody>
             {mangaList.map((entry, i) => (
                 <React.Fragment key={entry.mangaId}>
                     <tr>
-                        <td className="px-[2px] py-1  text-center">{i + 1}</td>
-                        <td className="px-[2px] py-1 ">
+                        <td className="px-[2px] py-[1px] text-center">{i + 1}</td>
+                        <td className="px-[2px] py-[1px] ">
                             <Link
                                 href={`/manga/${entry.manga.id}`}
                                 className="text-[blue]"
@@ -50,17 +35,17 @@ export default function ProfileMangaTable({ mangaList }: Props) {
                                 {entry.manga.titleUa || entry.manga.titleEn}
                             </Link>
                         </td>
-                        <td className="px-[2px] py-[1px]  text-center">
+                        <td className="px-[2px] py-[1px] text-center">
                             {entry.status}
                         </td>
-                        <td className="px-[2px] py-[1px]  text-center">
+                        <td className="px-[2px] py-[1px] text-center">
                             {entry.score ?? '—'}
                         </td>
-                        <td className="px-[2px] py-[1px]  text-center">
+                        <td className="px-[2px] py-[1px] text-center">
                             {entry.chaptersRead}
                             {entry.manga.chapters ? ` / ${entry.manga.chapters}` : ""}
                         </td>
-                        <td className="px-[2px] py-[1px]  text-center">
+                        <td className="px-[2px] py-[1px] text-center">
                             {entry.volumesRead}
                             {entry.manga.volumes ? ` / ${entry.manga.volumes}` : ""}
                         </td>

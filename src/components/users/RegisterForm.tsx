@@ -36,11 +36,12 @@ export default function RegisterForm() {
         >
             <h2 className="text-center mb-[4px]">Реєстрація</h2>
             <input
-                type="name"
+                type="text"
                 name="name"
                 placeholder="Ім'я"
                 value={form.name}
                 onChange={handleChange}
+                minLength={4}
                 required
                 className="p-[3px] border"
             />
@@ -50,6 +51,7 @@ export default function RegisterForm() {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
+                minLength={4}
                 required
                 className="p-[3px] border"
             />
@@ -59,6 +61,7 @@ export default function RegisterForm() {
                 placeholder="Пароль"
                 value={form.password}
                 onChange={handleChange}
+                minLength={6}
                 required
                 className="py-[3px] border"
             />

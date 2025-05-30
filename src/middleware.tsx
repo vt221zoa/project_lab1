@@ -71,7 +71,5 @@ export const config = {
         "/manga/edit/:id*",
         "/auth/login",
         "/auth/register",
-        "/auth/reset",
-        "/auth/verify",
     ],
 };
