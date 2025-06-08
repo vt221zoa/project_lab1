@@ -16,7 +16,20 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   globalIgnores(['src/generated']),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
+  {
+    files: ["**/*.stories.ts", "**/*.stories.tsx", "**/*.stories.js", "**/*.stories.jsx"],
+    rules: {
+      "storybook/no-renderer-packages": "off"
+    },
+  },
+  {
+    files: ["src/app/eula/page.tsx"],
+    rules: {
+      "react/no-unescaped-entities": "off"
+    },
+  },
+
 ];
 
 export default eslintConfig;
