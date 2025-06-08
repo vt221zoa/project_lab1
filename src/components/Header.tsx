@@ -21,6 +21,7 @@ const Header = () => {
             <nav className="flex gap-[20px] items-center mr-[140px]" >
                 <Link href="/anime" className="no-underline text-[#ffffff]">Аніме</Link>
                 <Link href="/manga" className="no-underline text-[#ffffff]">Манга</Link>
+                <Link href="/eula" className="no-underline text-[#ffffff]">EULA</Link>
                 {!loading && !user && (
                     <Link href="/auth/login" className="no-underline text-[#ffffff]">Увійти</Link>
                 )}

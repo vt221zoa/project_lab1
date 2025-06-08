@@ -1,0 +1,515 @@
+{
+	"info": {
+		"_postman_id": "99666628-a4ef-4345-9133-b199af1293bb",
+		"name": "AniMan REST API basics: CRUD, test & variable",
+		"description": "Колекція API запитів для тесту.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34830924"
+	},
+	"item": [
+		{
+			"name": "anime",
+			"item": [
+				{
+					"name": "GET Anime all data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/anime/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"anime",
+								""
+							]
+						},
+						"description": "Отримує всі твори аніме.  \nРезультат має бути завжди позитивним."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Anime [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/anime/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"anime",
+								"1"
+							]
+						},
+						"description": "Отримує аніме за ID.  \nВідображає твір з детальною інформацією"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Anime [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/anime/24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"anime",
+								"24"
+							]
+						},
+						"description": "Запускати лише при видаленні тесту.  \nЗазначити ID того що створено як тест.  \nВидаляє твір за ID."
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Anime [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titleUa\": \"Оновлене аніме\",\n  \"titleEn\": \"Updated anime\",\n  \"titleJp\": \"アップデートアニメ\",\n  \"description\": \"Опис\",\n  \"kind\": \"TV\",\n  \"episodes\": 12,\n  \"status\": \"ongoing\",\n  \"dateRelease\": \"2024-01-01\",\n  \"imageUrl\": \"anime.jpg\",\n  \"rating\": \"G\",\n  \"studioId\": 2,\n  \"genreIds\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/anime/24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"anime",
+								"24"
+							]
+						},
+						"description": "Оновлює аніме за інформацією."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Anime",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titleUa\": \"Твоє ім'я1\",\n  \"titleEn\": \"Your Name1\",\n  \"description\": \"Опис аніме\",\n  \"kind\": \"Фільм\",\n  \"episodes\": 1,\n  \"status\": \"released\",\n  \"dateRelease\": \"2016-08-26\",\n  \"rating\": \"R-17\",\n  \"studioId\": 3,\n  \"genreIds\": [1, 2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/anime",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"anime"
+							]
+						},
+						"description": "Створює аніме за інформацією."
+					},
+					"response": []
+				}
+			],
+			"description": "Папка аніме що містить API виклики."
+		},
+		{
+			"name": "manga",
+			"item": [
+				{
+					"name": "GET Manga all data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/manga/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"manga",
+								""
+							]
+						},
+						"description": "Отримує всі твори манги.  \nРезультат має бути завжди позитивним."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Manga [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/manga/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"manga",
+								"3"
+							]
+						},
+						"description": "Отримує мангу за ID"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Manga [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/manga/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"manga",
+								"2"
+							]
+						},
+						"description": "Видаляє мангу за ID"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Manga [id]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titleUa\": \"Оновлена манга\",\n  \"titleEn\": \"Updated manga\",\n  \"description\": \"Опис\",\n  \"kind\": \"Манга\",\n  \"chapter\": 12,\n  \"volumes\": 5,\n  \"status\": \"Випускається\",\n  \"dateRelease\": \"2024-01-01\",\n  \"imageUrl\": \"manga.jpg\",\n  \"genreIds\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/manga/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"manga",
+								"2"
+							]
+						},
+						"description": "Оновлює мангу за ID та з інформацією."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Manga",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titleUa\": \"Додана манга\",\n  \"titleEn\": \"Added manga\",\n  \"description\": \"Опис\",\n  \"kind\": \"Манга\",\n  \"chapter\": 12,\n  \"volumes\": 5,\n  \"status\": \"Випущено\",\n  \"dateRelease\": \"2024-01-01\",\n  \"imageUrl\": \"manga.jpg\",\n  \"genreIds\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/manga",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"manga"
+							]
+						},
+						"description": "Створює мангу з інформацією."
+					},
+					"response": []
+				}
+			],
+			"description": "Так само працює як і з аніме"
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "POST USERS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test\",\n  \"email\": \"Test@example\",\n  \"password\": \"Test@example\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Регістрація користувача  \nЯкщо буде помилка то користувач вже є у бд."
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"Test@example\",\r\n  \"password\": \"Test@example\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Вхід у акаунт користувача."
+					},
+					"response": []
+				}
+			],
+			"description": "Користувацькі норми"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}

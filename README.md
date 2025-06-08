@@ -19,10 +19,18 @@
 - Інформація про жанри, віковий рейтинг (при наведенні буде відображатися інформація про них)
 
 ### Технології
-- Next.js
-- React
+
+- Frontend
+  - Next.js (React) + TypeScript
+  - Storybook для UI
+  - ESlint
+- Backend
+  - Next.js API routes (TypeScript)
+  - Prisma ORM
+  - PostgreSQL
+- Документація API
+  - [Postman](postman/AniMan%20REST%20API%20basics-%20CRUD%2C%20test%20%26%20variable.postman_collection.json)
 - TailwindCSS
-- PostgreSQL (через Prisma та Neon.tech)
 - Cloudinary (збереження зображень)
 
 ---
@@ -30,11 +38,20 @@
 ## Юридична інформація
 Проєкт ліцензовано за умовами MIT License
 
-[MIT License](LICENSE)
+- [MIT License](LICENSE)
+- [End User License Agreement](http://localhost:3000/eula)
 
 ---
 
 ## Як почати роботу
+
+### Клонування проєкту
+
+```bash
+git clone git@github.com:vt221zoa/project_lab1.git
+cd project_lab1
+```
+
 ### Запуск проєкту
 1. Встановити залежності
 ```bash
@@ -55,6 +72,7 @@ npm run dev
 - **Запуск тестів з API**: `npm run test-a`
 - **Запуск тестів з компонентами**: `npm run test-c`
 - **Перевірка лінтування**: `npm run lint`
+- **Запуск storybook**: `npm run storybook`
 
 ---
 
