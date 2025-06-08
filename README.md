@@ -39,7 +39,7 @@
 Проєкт ліцензовано за умовами MIT License
 
 - [MIT License](LICENSE)
-- [End User License Agreement](http://localhost:3000/eula)
+- [End User License Agreement](eula.txt)
 
 ---
 
